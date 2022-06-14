@@ -26,7 +26,7 @@
     "pages/api/hello.jsx",
     "pages/index.jsx",
     "components/Story.jsx",
-    "components/Stories.jsx",
+    "components/Sotry/Stories.jsx",
     "components/Header.jsx",
     "components/Feed.jsx"
   ],

@@ -9,4 +9,13 @@
   .btn {
     @apply h-7 cursor-pointer transition-all duration-150 ease-in hover:scale-125;
   }
+  .icon {
+    @apply hidden h-10 w-10 cursor-pointer rounded-full bg-gray-200 p-2 text-black hover:text-blue-500 xl:inline-flex;
+  }
+  .iconDark {
+    @apply h-10 w-10 cursor-pointer rounded-full bg-gray-200 p-2 text-black hover:text-blue-500;
+  }
+  .inputIcon {
+    @apply flex flex-grow cursor-pointer  items-center justify-center space-x-1 rounded-md p-2 hover:bg-gray-100;
+  }
 }

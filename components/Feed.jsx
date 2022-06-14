@@ -1,31 +1,17 @@
-import Stories from './Stories'
-import Posts from './Posts'
-import MiniProfile from './MiniProfile'
-import Suggestions from './Suggestions'
-import {signOut, useSession} from 'next-auth/react'
+import Stories from './Sotry/Stories'
+import InputBox from './InputBox'
 
-function Feed() {
-  const {data : session}= useSession();
+import Posts from './Posts/Posts'
+
+function Feed({ dark }) {
   return (
-    <main className={`mx-auto grid grid-cols-1 md:max-w-3xl md:grid-cols-2 xl:max-w-6xl xl:grid-cols-3 ${!session && "!grid-cols-1 !max-w-3xl"} `}>
-      <section className="col-span-2">
-        {/* STORIES */}
+    <div className="flex-grow  overflow-y-auto pt-6 lg:mr-6 xl:mr-[22px] ">
+      <div className="mx-auto w-[450px] transition-all duration-1000 ease-out md:w-[500px] md:max-w-lg lg:w-auto lg:max-w-2xl">
         <Stories />
-        <Posts />
-      </section>
-
-      <section className='hidden xl:inline-grid md:col-span-1'>
-    {session?(
-    <div className="fixed top-13">
-      <MiniProfile/>
-      <Suggestions/>
+        <InputBox dark={dark} />
+        <Posts dark={dark} />
       </div>
-      
-      ):("")}
-      
-
-      </section> 
-    </main>
+    </div>
   )
 }
 
