@@ -1,15 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { MdClose } from 'react-icons/md'
-
 import {
   SearchIcon,
   CameraIcon,
-  VideoCameraIcon,
   TrashIcon,
   PlusCircleIcon,
   UserGroupIcon,
+  ChevronDownIcon,
 } from '@heroicons/react/solid'
-
 import {
   addDoc,
   collection,
@@ -18,26 +16,22 @@ import {
   doc,
   snapshot,
 } from 'firebase/firestore'
-import firebase from '../../firebase'
 import { db, storage } from '../../firebase'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { ref, getDownloadURL, uploadString } from '@firebase/storage'
-
 import InputEmoji from 'react-input-emoji'
 import { useRecoilState } from 'recoil'
 import { postModal } from '../../atoms/postModal'
-import { async } from '@firebase/util'
-import { BsYoutube } from 'react-icons/bs'
-import { FiYoutube } from 'react-icons/fi'
+import toast from 'react-hot-toast'
 import { CgYoutube } from 'react-icons/cg'
+import { BiGlobe } from 'react-icons/bi'
 
 function Modal({ dark }) {
   const { data: session } = useSession()
-  const [firstName, lastName] = session.user.name.split(' ')
+  const [firstName, lastName] = session?.user?.name.split(' ')
   const myRefNot = useRef()
   const fileRef = useRef(null)
   const inputRef = useRef(false)
-  const [spinner, setSpinner] = useState(false)
   const [imagesUrl, setImagesUrl] = useState([])
   const [name, setName] = useState()
   const [openPostWindow, setOpenPostWindow] = useRecoilState(postModal)
@@ -69,6 +63,7 @@ function Modal({ dark }) {
   }
   const uploadImage = async (e) => {
     e.preventDefault()
+    toast.loading('Creating new Post...')
     const docRef = await addDoc(collection(db, 'posts'), {
       username: session.user.name,
       caption: text,
@@ -87,6 +82,8 @@ function Modal({ dark }) {
           }
         )
       })
+      const notification = toast.loading('Creating new Post...')
+      toast.success('new Post was Created', { id: notification })
       console.log('New doc added with ID', docRef.id)
 
       setImagesUrl([])
@@ -144,8 +141,12 @@ function Modal({ dark }) {
             />
             <div className="">
               <div className="text-sm">{`${firstName} ${lastName}`}</div>
-              <div className="flex justify-center rounded-md bg-gray-200 text-xs text-cg">
-                Public
+              <div className="curser-pointer flex  items-center rounded-3xl bg-gray-200 p-1 hover:bg-gray-100 ">
+                <BiGlobe classname="h-[3px]w-[3px] " />
+                <div className="flex justify-center rounded-md  text-xs text-cg">
+                  Public
+                </div>
+                <ChevronDownIcon className="h-4 " />
               </div>
             </div>
           </div>
@@ -187,8 +188,8 @@ function Modal({ dark }) {
           </div>
         </div>
         <div className="flex h-[142px] flex-col p-1 ">
-          <div className=" ml-4 mr-4 flex h-1/2 items-center space-x-24 rounded-md   ">
-            <div className="ml-2 w-40 text-sm ">Add to your post </div>
+          <div className=" ml-4 mr-4 flex h-1/2 items-center justify-between rounded-md   ">
+            <div className="ml-2 w-fit text-sm ">Add to your post </div>
             <div className="flex space-x-1 ">
               <CameraIcon
                 onClick={() => fileRef.current.click()}
@@ -219,7 +220,11 @@ function Modal({ dark }) {
             disabled={!text.trim() && imagesUrl.length < 1}
             type="submit"
             onClick={uploadImage}
-            className="m-3 flex h-1/2 flex-1 cursor-pointer flex-col items-center justify-center rounded-md bg-blue-500 text-white"
+            className={`m-3 flex h-1/2 flex-1 cursor-pointer flex-col items-center justify-center rounded-md ${
+              !text.trim() && imagesUrl.length < 1
+                ? 'bg-gray-500 text-white '
+                : 'bg-blue-500 text-white'
+            }`}
           >
             Post
           </button>

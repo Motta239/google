@@ -18,7 +18,7 @@ function Posts() {
 
     [db]
   )
-
+  console.log(posts)
   return (
     <div className="flex w-full items-center justify-center ">
       {posts.length >= 1 ? (

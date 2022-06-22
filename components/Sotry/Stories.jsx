@@ -1,25 +1,21 @@
 import StoryCard from './StoryCard'
-import { MdClose } from 'react-icons/md'
 import React, { useEffect, useRef, useState } from 'react'
 import {
-  SearchIcon,
-  CameraIcon,
-  VideoCameraIcon,
-  TrashIcon,
-  PlusCircleIcon,
-  UserGroupIcon,
-  ArrowCircleDownIcon,
-  ArrowCircleRightIcon,
+  ArrowNarrowLeftIcon,
+  ArrowNarrowRightIcon,
+  ChevronDoubleRightIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
 } from '@heroicons/react/solid'
-import { signIn, signOut, useSession } from 'next-auth/react'
-import { ArrowCircleLeftIcon } from '@heroicons/react/outline'
+import { useSession } from 'next-auth/react'
 import InputEmoji from 'react-input-emoji'
 
 function Stories() {
   const { data: session } = useSession()
   const photoRef = useRef()
   const img = session?.user?.image
-
+  const [openStory, setOpenStory] = useState(false)
+  const [storyNum, setStory] = useState(false)
   const stories = [
     {
       name: 'Moti Yosef',
@@ -59,38 +55,35 @@ function Stories() {
       }
     })
   })
-  const [openStory, setOpenStory] = useState(false)
-  const [storyNum, setStory] = useState(false)
-  console.log(stories.length - 1, storyNum)
   return (
     <div className="mx-auto flex justify-between space-x-2 lg:space-x-2 ">
       {openStory && (
         <div className="fixed top-[0px] right-0 left-0 bottom-0 z-50 flex  items-center justify-center bg-neutral-500 bg-opacity-50 ">
           <div
             ref={photoRef}
-            className="  top-[200px] left-[400px] flex  rounded-md object-cover shadow-xl"
+            className=" left-[400px] flex flex-col items-center justify-center  rounded-md object-cover shadow-xl"
           >
-            <div className=" w-full">
+            <div className=" flex w-full items-center justify-center  space-x-6">
+              {!storyNum == 0 && (
+                <ChevronLeftIcon
+                  onClick={() => setStory(storyNum - 1)}
+                  className=" h-14 w-14 rounded-full bg-fbgr text-white "
+                />
+              )}
               <img
-                className="  h-[400px] w-[300px] rounded-md object-cover shadow-xl transition-all duration-500 ease-in lg:h-[700px]  lg:w-[400px]"
+                className="h-[500px] w-[300px] rounded-md object-cover shadow-xl transition-all duration-500 ease-in lg:h-[700px]  lg:w-[400px]"
                 src={stories[storyNum].src}
                 alt=""
               />
-              <div className="flex w-full justify-between  ">
-                {!storyNum == 0 && (
-                  <ArrowCircleDownIcon
-                    onClick={() => setStory(storyNum - 1)}
-                    className="h-14 w-14 rotate-90 text-blue-700"
-                  />
-                )}
-                <InputEmoji placeholder="Add a Comment..." />
-                {storyNum !== stories.length - 1 && (
-                  <ArrowCircleRightIcon
-                    onClick={() => setStory(storyNum + 1)}
-                    className="  h-14 w-14  text-blue-700  "
-                  />
-                )}
-              </div>
+              {storyNum !== stories.length - 1 && (
+                <ChevronRightIcon
+                  onClick={() => setStory(storyNum + 1)}
+                  className=" h-14 w-14 rounded-full bg-fbgr text-white hover:ml-5 "
+                />
+              )}
+            </div>
+            <div className="  bottom-[130px] w-80">
+              <InputEmoji placeholder="Add a Comment..." />
             </div>
           </div>
         </div>

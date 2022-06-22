@@ -1,11 +1,9 @@
-import { SelectorIcon } from '@heroicons/react/solid'
 import React, { useState } from 'react'
-
 function HeaderIcon({ Icon, active }) {
   const [select, setSelect] = useState(false)
 
   return (
-    <div className="group flex cursor-pointer items-center rounded-xl active:border-b-2 active:border-blue-500 sm:h-14 md:px-10 md:hover:bg-gray-100  ">
+    <div className="group flex cursor-pointer items-center rounded-xl active:border-b-2 active:border-blue-500 sm:h-14 md:px-3 md:hover:bg-gray-100 lg:px-10  ">
       <Icon
         onClick={() => setSelect(!select)}
         className={`h-5 ${

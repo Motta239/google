@@ -4,7 +4,7 @@ import { db, storage } from '../firebase'
 import { useRecoilState } from 'recoil'
 import { postModal } from '../atoms/postModal'
 import { ref, getDownloadURL, uploadString } from '@firebase/storage'
-import { EmojiHappyIcon } from '@heroicons/react/outline'
+import { EmojiHappyIcon, PhotographIcon } from '@heroicons/react/outline'
 import {
   CameraIcon,
   TrashIcon,
@@ -18,8 +18,10 @@ import {
   updateDoc,
   doc,
 } from 'firebase/firestore'
+import { PhotoAlbum, PhotoCamera, PollOutlined } from '@mui/icons-material'
+import { MdPhotoAlbum } from 'react-icons/md'
 
-function InputBox({ dark }) {
+function GroupInputBox({ group, dark }) {
   const { data: session } = useSession()
   const [openPostWindow, setOpenPostWindow] = useRecoilState(postModal)
   const inputRef = useRef(false)
@@ -29,9 +31,10 @@ function InputBox({ dark }) {
 
   const uploadImage = async (e) => {
     e.preventDefault()
-    const docRef = await addDoc(collection(db, 'posts'), {
+    const docRef = await addDoc(collection(db, `groups`), {
       username: session.user.name,
       caption: inputRef.current.value,
+      group: group,
       profileImg: session.user.image,
       timestamp: serverTimestamp(),
     })
@@ -72,13 +75,13 @@ function InputBox({ dark }) {
   }
   return (
     <div
-      className={`font-md mx-auto mt-6 rounded-2xl transition-all  duration-500 active:mt-12 ${
+      className={`font-md mx-auto  rounded-2xl transition-all  duration-500 active:mt-12 ${
         !dark ? 'bg-white text-gray-500' : ' bg-neutral-900 text-white '
       } shadow-md md:p-2`}
     >
       <div className="">
         {!imageToPost && (
-          <div className="flex items-center space-x-4 border-b-[0.2px] border-gray-500 p-4">
+          <div className="flex items-center space-x-4 border-b-[0.2px] border-gray-400 p-4">
             <img
               className="rounded-full"
               src={session?.user?.image}
@@ -93,7 +96,7 @@ function InputBox({ dark }) {
                 ref={inputRef}
                 className="h-12 flex-grow rounded-full border-transparent border-gray-100 bg-gray-200 px-5 text-black !outline-none focus:border-transparent focus:border-gray-100 focus:ring-0"
                 type="text"
-                placeholder={`What's on your mind`}
+                placeholder={`Write Something...`}
                 onChange={(e) => setName(e.target.value.trim())}
               />
               <button
@@ -156,19 +159,11 @@ function InputBox({ dark }) {
         )}
       </div>
       <div className="border-top flex justify-evenly p-3">
-        <div className="inputIcon hover:bg-gray-300 hover:text-black ">
-          <UserGroupIcon className="h-7 text-blue-600 " />
-          <p className="text-xs sm:text-sm xl:text-base"> Tag Friend</p>
-        </div>
-        <div className="inputIcon hover:bg-gray-300 hover:text-black ">
-          <EmojiHappyIcon className="h-7 text-green-500 " />
-          <p className="text-xs sm:text-sm xl:text-base"> Feeling/Activity</p>
-        </div>
         <div
           onClick={() => fileRef.current.click()}
           className="inputIcon hover:bg-gray-300 hover:text-black "
         >
-          <CameraIcon className="h-7 text-red-600 " />
+          <PhotographIcon className="h-7 text-green-600 " />
           <p className="text-xs sm:text-sm xl:text-base"> Photo\Video</p>
 
           <input
@@ -179,9 +174,13 @@ function InputBox({ dark }) {
             onChange={addImageToPost}
           />
         </div>
+        <div className="inputIcon hover:bg-gray-300 hover:text-black ">
+          <PollOutlined className="h-7 text-orange-400 " />
+          <p className="text-xs sm:text-sm xl:text-base"> Poll</p>
+        </div>
       </div>
     </div>
   )
 }
 
-export default InputBox
+export default GroupInputBox

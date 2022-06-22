@@ -19,6 +19,7 @@ import GridIcon from './Grid Menu/GridIcon'
 import MessageIcon from './Messages/MessageIcon'
 import { useRecoilState } from 'recoil'
 import { darkMode } from '../atoms/darkMode'
+import Link from 'next/link'
 
 function Header({ dark }) {
   const { data: session } = useSession()
@@ -42,14 +43,16 @@ function Header({ dark }) {
       className={`sticky top-0 z-50 flex items-center p-2   shadow-sm backdrop-blur-xl lg:px-5`}
     >
       {/* Header Left */}
-      <div className="ml-2 flex items-center transition-all duration-500 ease-in md:w-[400px]">
-        <Image
-          src="https://links.papareact.com/5me"
-          width={40}
-          height={40}
-          layout="fixed"
-        />
-        <div className="ml-2 flex items-center  rounded-full md:bg-gray-100">
+      <div className="ml-2 flex items-center transition-all duration-500 ease-in md:w-[310px]">
+        <Link href="/">
+          <Image
+            src="https://links.papareact.com/5me"
+            width={40}
+            height={40}
+            layout="fixed"
+          />
+        </Link>
+        <div className="ml-2 flex items-center  rounded-full lg:bg-gray-100">
           <SearchIcon
             className={` h-8 cursor-pointer hover:text-blue-500 ${
               dark ? 'text-white' : 'hover:text-blue text-gray-500'
@@ -57,7 +60,7 @@ function Header({ dark }) {
           />
           <input
             type="text"
-            className=" hidden flex-shrink  items-center  border-transparent bg-transparent outline-none transition-all duration-300 ease-in focus:border-transparent focus:ring-0  md:inline-flex "
+            className=" hidden flex-shrink  items-center  border-transparent bg-transparent outline-none transition-all duration-300 ease-in focus:border-transparent focus:ring-0  lg:inline-flex "
             placeholder="Search facebook"
           />
         </div>
@@ -76,21 +79,25 @@ function Header({ dark }) {
       </div>
       {/* Header Right */}
       {session ? (
-        <div className=" flex  items-center justify-end space-x-[2px] md:space-x-2 ">
-          <div className="flex flex-col items-center justify-center "></div>
+        <div className=" flex  items-center   space-x-[10px] md:space-x-2 ">
+          <div className="flex flex-col items-center justify-center  "></div>
           <img
             onClick={signOut}
             src={session?.user?.image}
             alt="profile pic"
             className=" h-10 w-10 cursor-pointer rounded-full sm:inline-flex"
           />
-          <GridIcon Icon={ViewGridIcon} name={'Menu'} dark={dark} />
-          <MessageIcon Icon={ChatIcon} name={'Messages'} dark={dark} />
-          <NotificationIcon Icon={BellIcon} name={'Notifications'} />
-          <MdDarkMode
-            onClick={() => setDark(!dark)}
-            className={`iconDark ${dark && 'bg-blue-200 text-blue-500'}`}
-          />
+          <div className=" hidden space-x-2 md:inline-flex ">
+            <GridIcon Icon={ViewGridIcon} name={'Menu'} dark={dark} />
+            <MessageIcon Icon={ChatIcon} name={'Messages'} dark={dark} />
+            <NotificationIcon Icon={BellIcon} name={'Notifications'} />
+          </div>
+          <div className="">
+            <MdDarkMode
+              onClick={() => setDark(!dark)}
+              className={`iconDark ${dark && 'bg-blue-200 text-blue-500'}`}
+            />
+          </div>
         </div>
       ) : (
         <button
@@ -98,7 +105,7 @@ function Header({ dark }) {
           onClick={signIn}
         >
           {' '}
-          Sign In
+          Login In
         </button>
       )}
     </div>

@@ -15,7 +15,7 @@ function NotificationIcon({ Icon, name }) {
   }
   const handleClickInside2 = () => setOpenNot(true)
   return (
-    <div ref={myRefNot} className="">
+    <div ref={myRefNot} className="hidden lg:inline-flex">
       <div className="flex flex-col items-center justify-center ">
         <p
           style={style}

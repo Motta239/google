@@ -39,17 +39,7 @@ import InputEmoji from 'react-input-emoji'
 import { darkMode } from '../../atoms/darkMode'
 import { BiComment, BiCommentAdd, BiMessageEdit } from 'react-icons/bi'
 import { MdComment, MdInsertComment } from 'react-icons/md'
-function Post({
-  id,
-  username,
-  userImg,
-  key,
-  img,
-  caption,
-  edited,
-  editTime,
-  timestamp,
-}) {
+function GroupPost({ id, username, userImg, key, caption, timestamp, docId }) {
   const { data: session } = useSession()
   const [{ email, name }, setContactId] = useRecoilState(contactId)
   const [dark, setDark] = useRecoilState(darkMode)
@@ -70,34 +60,40 @@ function Post({
   const [count, setCount] = useState(1)
   const [updatedCom, setUpdatedCom] = useState('')
   const [sendCommentModal, setSendCommentMoadl] = useState(false)
-  console.log(userImg)
-
+  const [readMore, setReadMore] = useState(false)
+  console.log(hasLiked)
   useEffect(
     () =>
       onSnapshot(
         query(
-          collection(db, 'posts', id, 'comments'),
+          collection(db, 'groups', docId, 'comments'),
           orderBy('timestamp', 'desc')
         ),
         (snapshot) => {
           setComments(snapshot.docs)
         }
       ),
-    [db, id]
+    [db, docId]
   )
   useEffect(
     () =>
-      onSnapshot(query(collection(db, 'posts', id, 'likes')), (snapshot) => {
-        setLikes(snapshot.docs)
-      }),
-    [db, id]
+      onSnapshot(
+        query(collection(db, 'groups', docId, 'likes')),
+        (snapshot) => {
+          setLikes(snapshot.docs)
+        }
+      ),
+    [db, docId]
   )
   useEffect(
     () =>
-      onSnapshot(query(collection(db, 'posts', id, 'images')), (snapshot) => {
-        setImages(snapshot.docs)
-      }),
-    [db, id]
+      onSnapshot(
+        query(collection(db, 'groups', docId, 'images')),
+        (snapshot) => {
+          setImages(snapshot.docs)
+        }
+      ),
+    [db, docId]
   )
   useEffect(
     () =>
@@ -134,47 +130,42 @@ function Post({
       }
     })
   })
-  const uploadPost = async (e) => {
-    e.preventDefault()
-    const washingtonRef = doc(db, 'posts', id)
-    await updateDoc(washingtonRef, {
-      caption: updatedCom,
-      edited: 'Edited',
-      editTime: serverTimestamp(),
-    })
-    setEditPost(false)
-  }
+
   const likePost = async () => {
     if (!session) return
     if (hasLiked) {
-      await deleteDoc(doc(db, 'posts', id, 'likes', session.user.uid))
+      await deleteDoc(doc(db, 'groups', docId, 'likes', session.user.uid))
     } else {
-      await setDoc(doc(db, 'posts', id, 'likes', session.user.uid), {
+      await setDoc(doc(db, 'groups', docId, 'likes', session.user.uid), {
         username: session.user.name,
       })
     }
   }
   const deletePost = async () => {
-    await deleteDoc(doc(db, 'posts', id))
-    await deleteDoc(doc(db, 'posts', id, 'likes', session.user.uid))
+    await deleteDoc(doc(db, 'groups', docId))
+    await deleteDoc(doc(db, 'groups', docId, 'likes', session.user.uid))
+    await deleteDoc(doc(db, 'groups', docId, 'comments'))
     console.log('post deleted')
   }
   const sendComment = async (e) => {
     const commentToSend = comment
     setComment('')
-    await addDoc(collection(db, 'posts', id, 'comments'), {
-      comment: commentToSend,
-      username: session.user.name,
-      userImage: session.user.image,
-      timestamp: serverTimestamp(),
-    })
+    await addDoc(
+      collection(db, 'groups', docId, 'comments', session.user.uid),
+      {
+        comment: commentToSend,
+        username: session.user.name,
+        userImage: session.user.image,
+        timestamp: serverTimestamp(),
+      }
+    )
   }
 
   return (
     <div
       ref={updateCapRef}
       key={key}
-      className={` relative my-7 rounded-xl transition-all duration-300 ease-in ${
+      className={` relative mt-7 rounded-xl transition-all duration-300 ease-in ${
         dark ? 'bg-neutral-900 text-white' : 'bg-white text-black '
       }  shadow-2xl `}
     >
@@ -191,14 +182,6 @@ function Post({
           <Moment className=" text-sm text-gray-400" fromNow>
             {new Date(timestamp?.toDate()).toLocaleString()}
           </Moment>
-          {edited && (
-            <div className="flex">
-              <p className="text-xs text-gray-400">{edited}</p>{' '}
-              <Moment className=" ml-1 text-xs text-gray-400" fromNow>
-                {new Date(editTime?.toDate()).toLocaleString().slice()}
-              </Moment>
-            </div>
-          )}
         </div>
 
         <DotsHorizontalIcon
@@ -277,12 +260,17 @@ function Post({
             </button>
           </div>
         </div>
+      ) : !readMore ? (
+        <p className="p-5  ">{`${caption.slice(0, 350)}`}</p>
       ) : (
-        <p className={`truncate p-5 ${caption.length < 5 && 'text-4xl'}`}>
-          {caption}
-        </p>
+        <p className="p-5 "> {caption}</p>
       )}
 
+      {caption.length > 350 && (
+        <p className="ml-5 text-sm" onClick={() => setReadMore(!readMore)}>
+          {!readMore ? `Read More` : `Show Less`}
+        </p>
+      )}
       {openPhotoModal && (
         <div className="it-c fixed top-[0px] right-0 left-0 bottom-0 z-50 flex   justify-center bg-neutral-500 bg-opacity-50 ">
           <div
@@ -444,7 +432,7 @@ function Post({
       {likes.length > 0 && (
         <div className=" flex p-4 pl-6 font-bold">
           <p className="tb-5 pr-2  text-lg ">{`${likes.length}`} </p>
-          <ThumbUpIcon onClick={likePost} className="tb-5 h-3" />
+          <ThumbUpIcon onClick={likePost} className="tb-5 h-6" />
         </div>
       )}
       {com && (
@@ -502,4 +490,4 @@ function Post({
   )
 }
 
-export default Post
+export default GroupPost

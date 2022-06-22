@@ -13,6 +13,7 @@ module.exports = {
         fbo: '#f5533d',
         fbp: '#f02849',
         cg: '#4e4e4e',
+        ytr: '#FF0000',
       },
       translate: ['group-hover', 'hover'],
     },

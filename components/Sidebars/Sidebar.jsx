@@ -20,6 +20,7 @@ import { signIn, signOut, useSession } from 'next-auth/react'
 import { RiClockwise2Fill, RiYoutubeFill } from 'react-icons/ri'
 import { BiCalculator, BiVideo } from 'react-icons/bi'
 import { BsAppIndicator, BsCompass, BsDoorClosedFill } from 'react-icons/bs'
+import Link from 'next/link'
 function Sidebar() {
   const { data: session } = useSession()
   const [seeMore, setSeeMore] = useState(false)
@@ -32,8 +33,17 @@ function Sidebar() {
       } drop-shadow-md transition-all duration-300 ease-in lg:left-[35px] lg:w-[160px] `}
     >
       <SidebarRow src={session?.user?.image} title={session?.user?.name} />
-      <SidebarRow Icon={UsersIcon} title="Friends" />
-      <SidebarRow Icon={UserGroupIcon} title="Groups" />
+      <Link href="/Friends">
+        <div className="">
+          <SidebarRow Icon={UsersIcon} title="Friends" />
+        </div>
+      </Link>
+      <Link href="/Groups">
+        <div className="">
+          <SidebarRow Icon={UserGroupIcon} title="Groups" />
+        </div>
+      </Link>
+
       <SidebarRow Icon={ShoppingBagIcon} title="Marketplace" />
       <SidebarRow Icon={RiYoutubeFill} title="Watch" />
       <SidebarRow Icon={CalendarIcon} title="Events" />

@@ -21,15 +21,16 @@ function NotCard({ name, image, message, dark }) {
       onClick={() =>
         setContactId({ name: name, src: image, openMessage: true })
       }
-      className={`  flex h-20 w-auto items-center space-x-2 rounded-md border-t-[1px] p-2 ${
+      className={`  flex  items-center   space-x-2  border-t-[1px] p-2 ${
         dark && 'border-none text-white hover:bg-blue-500 '
       }  `}
     >
       <img
         src={image}
         alt="profile pic"
-        className=" h-12 w-20 cursor-pointer rounded-full object-cover shadow-md md:inline"
+        className=" h-[50px] w-[75px] cursor-pointer rounded-full object-cover shadow-md"
       />
+
       <div className="flex w-full flex-col space-y-1 ">
         <div className="">{name}</div>
         <div
