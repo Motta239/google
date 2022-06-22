@@ -150,15 +150,12 @@ function GroupPost({ id, username, userImg, key, caption, timestamp, docId }) {
   const sendComment = async (e) => {
     const commentToSend = comment
     setComment('')
-    await addDoc(
-      collection(db, 'groups', docId, 'comments', session.user.uid),
-      {
-        comment: commentToSend,
-        username: session.user.name,
-        userImage: session.user.image,
-        timestamp: serverTimestamp(),
-      }
-    )
+    await addDoc(collection(db, 'groups', docId, 'comments'), {
+      comment: commentToSend,
+      username: session.user.name,
+      userImage: session.user.image,
+      timestamp: serverTimestamp(),
+    })
   }
 
   return (
