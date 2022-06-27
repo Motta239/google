@@ -14,6 +14,7 @@ export default NextAuth({
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
     }),
   ],
+  secret: process.env.SECRET,
   //   theme:{
   //       logo: "https://links.papareact.com/sq0",
   //       brandColor:"#F13287",

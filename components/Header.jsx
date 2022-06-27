@@ -40,7 +40,7 @@ function Header() {
 
   return (
     <div
-      className={`sticky top-0 z-50 flex items-center p-2  ${
+      className={`sticky top-0 z-50 flex items-center p-2   ${
         dark ? 'bg-neutral-800' : 'bg-gray-100'
       } shadow-sm transition-all duration-1000 ease-in lg:px-5`}
     >
@@ -109,7 +109,7 @@ function Header() {
           onClick={signIn}
         >
           {' '}
-          Login In
+          Login
         </button>
       )}
     </div>

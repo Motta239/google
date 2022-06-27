@@ -12,11 +12,7 @@ function Home() {
   const [openPostWindow, setOpenPostWindow] = useRecoilState(postModal)
 
   return (
-    <div
-      className={`h-screen overflow-y-scroll ${
-        dark ? 'bg-zinc-800' : 'bg-gray-200'
-      }`}
-    >
+    <div className={`min-h-[100vh] ${dark ? 'bg-zinc-800' : 'bg-gray-200'}`}>
       <Head>
         <title>Facebook</title>
         <link rel="icon" href="/facebook.svg" />
