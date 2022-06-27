@@ -43,8 +43,7 @@ function Post({
   id,
   username,
   userImg,
-  key,
-  img,
+
   caption,
   edited,
   editTime,
@@ -70,7 +69,6 @@ function Post({
   const [count, setCount] = useState(1)
   const [updatedCom, setUpdatedCom] = useState('')
   const [sendCommentModal, setSendCommentMoadl] = useState(false)
-  console.log(userImg)
 
   useEffect(
     () =>
@@ -173,12 +171,10 @@ function Post({
   return (
     <div
       ref={updateCapRef}
-      key={key}
       className={` relative my-7 rounded-xl transition-all duration-300 ease-in ${
         dark ? 'bg-neutral-900 text-white' : 'bg-white text-black '
       }  shadow-2xl `}
     >
-      {/* Header */}
       <div className="flex  p-6 ">
         <img
           src={userImg}
@@ -380,6 +376,7 @@ function Post({
           ) : (
             images.map((image, i) => (
               <img
+                key={i}
                 onClick={() => {
                   setCount(i)
                   setOpenPhotoModal(true)

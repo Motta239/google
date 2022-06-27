@@ -96,8 +96,6 @@ function Friends() {
   ]
   return (
     <div className=" ">
-      <Header />
-
       <div className=" min-h-[1200px]' flex h-screen p-3 shadow-2xl  ">
         <div className="  fixed min-w-[260px]  flex-col">
           <div className="flex h-14 w-full items-center justify-between p-3 ">

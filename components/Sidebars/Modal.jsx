@@ -22,7 +22,7 @@ import { ref, getDownloadURL, uploadString } from '@firebase/storage'
 import InputEmoji from 'react-input-emoji'
 import { useRecoilState } from 'recoil'
 import { postModal } from '../../atoms/postModal'
-import toast from 'react-hot-toast'
+
 import { CgYoutube } from 'react-icons/cg'
 import { BiGlobe } from 'react-icons/bi'
 
@@ -63,7 +63,7 @@ function Modal({ dark }) {
   }
   const uploadImage = async (e) => {
     e.preventDefault()
-    toast.loading('Creating new Post...')
+
     const docRef = await addDoc(collection(db, 'posts'), {
       username: session.user.name,
       caption: text,
@@ -82,8 +82,7 @@ function Modal({ dark }) {
           }
         )
       })
-      const notification = toast.loading('Creating new Post...')
-      toast.success('new Post was Created', { id: notification })
+
       console.log('New doc added with ID', docRef.id)
 
       setImagesUrl([])
@@ -107,11 +106,10 @@ function Modal({ dark }) {
   }
   const removeImageUrl = (idx) => {
     const temp = [...imagesUrl]
-    console.log(idx)
+
     temp.splice(idx, 1)
     setImagesUrl(temp)
   }
-  console.log(youtubeSrc)
 
   return (
     <div className="fixed top-[68px] right-0 left-0 bottom-0 z-50 flex items-center justify-center bg-neutral-500 bg-opacity-30">

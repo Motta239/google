@@ -7,6 +7,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <SessionProvider session={session}>
       <RecoilRoot>
+        <Header />
         <Component {...pageProps} />
       </RecoilRoot>
     </SessionProvider>

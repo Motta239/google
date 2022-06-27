@@ -12,6 +12,7 @@ import {
   PeopleOutlined,
   SearchOutlined,
   Settings,
+  SettingsAccessibility,
 } from '@mui/icons-material'
 import React, { useEffect, useRef, useState } from 'react'
 import Header from '../components/Header'
@@ -21,8 +22,10 @@ import GroupInputBox from '../components/GroupInputBox'
 import GroupPost from '../components/Posts/GroupPost'
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore'
 import { db } from '../firebase'
-
+import { useRecoilState } from 'recoil'
+import { darkMode } from '../atoms/darkMode'
 function Groups() {
+  const [dark, setDark] = useRecoilState(darkMode)
   const groups = [
     {
       id: 1,
@@ -47,7 +50,7 @@ function Groups() {
     {
       id: 2,
       groupImg:
-        'https://scontent.fhfa1-1.fna.fbcdn.net/v/t39.30808-6/273927907_2763027143840868_2069290103158092705_n.jpg?stp=dst-jpg_p526x395&_nc_cat=102&ccb=1-7&_nc_sid=8631f5&_nc_ohc=uuRM3VYcrKkAX83TY0T&tn=osZC3KjZEenLPwoO&_nc_ht=scontent.fhfa1-1.fna&oh=00_AT8Vm_9_IHEQNeMEZ-khh4-DeU5IHQVlBsmP3yu4oEO28w&oe=62B1D18D',
+        'https://scontent.ftlv5-1.fna.fbcdn.net/v/t1.18169-9/25659637_2003684186540982_4710417243308351047_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=8631f5&_nc_ohc=KmE2HjD-i4gAX_dBvCt&_nc_ht=scontent.ftlv5-1.fna&oh=00_AT-2P5rqKXo8ResSp4TjTgzEUeWhU5a_b3JCemioVSYiPA&oe=62D979A5',
       lastActive: 'last active 23 days ago',
       groupName: `love and marrige`,
       classification: 'public',
@@ -294,24 +297,39 @@ function Groups() {
     { title: 'Files' },
   ]
   const myRef = useRef()
-  const [isActive, setIsActive] = useState(false)
-  const [readMore, setReadMore] = useState(false)
+  const searchRef = useRef()
+  const [openNotSett, setOpenNotSett] = useState(false)
+  const [openJoinSett, setOpenJoinSett] = useState(false)
+  const [openSearch, setOpenSearch] = useState(false)
+
+  const [search, setSearch] = useState('')
+  const [groupSearch, setGroupSearch] = useState('')
+  const [posts, setPosts] = useState([])
   const [groupInfo, setGroupInfo] = useState([
     {
       groupImg: groups[0]?.groupImg,
       groupName: groups[0]?.groupName,
       id: groups[0]?.id,
+      members: groups[0]?.members.toFixed(1),
     },
   ])
-  const [search, setSearch] = useState('')
+
   useEffect(() => {
     document.addEventListener('mousedown', (e) => {
       if (!myRef.current?.contains(e.target)) {
-        setIsActive(false)
+        setOpenNotSett(false)
       }
     })
   })
-  const [posts, setPosts] = useState([])
+  useEffect(() => {
+    document.addEventListener('mousedown', (e) => {
+      if (!searchRef.current?.contains(e.target)) {
+        setOpenSearch(false)
+        setSearch('')
+      }
+    })
+  })
+
   useEffect(
     () =>
       onSnapshot(query(collection(db, `groups`)), (snapshot) => {
@@ -320,20 +338,33 @@ function Groups() {
 
     [db]
   )
+  const filterdSearch = posts.filter((post) =>
+    post.data().caption.includes(search.toLowerCase().trim())
+  )
+  const filterdGroupSearch = groups.filter((group) =>
+    group.groupName.includes(groupSearch.toLowerCase().trim())
+  )
 
   return (
     <div className=" ">
-      <Header />
-
-      <div className=" relative flex h-screen p-3   ">
-        <div className=" fixed flex-col bg-white">
-          <div className="absolute h-[10px] w-[360px]  bg-white">
+      <div className="flex p-3">
+        <div
+          className={`sticky top-0 flex-col ${
+            dark ? 'bg-neutral-800 text-white' : 'bg-white '
+          } `}
+        >
+          <div
+            className={`sticky top-20 h-20 w-[360px] ${
+              dark ? 'bg-neutral-800 text-white' : 'bg-white '
+            }
+          `}
+          >
             <div className="flex items-center justify-between p-3 ">
               <p className="text-2xl font-semibold ">Groups</p>
               <Settings
-                onClick={() => setIsActive(!isActive)}
+                onClick={() => setOpenNotSett(true)}
                 className={` ${
-                  isActive && 'bg-blue-200 text-blue-500'
+                  openNotSett && 'bg-blue-200 text-blue-500'
                 } h-7 w-7 rounded-full bg-gray-200 p-1 hover:fill-neutral-500 `}
               />
             </div>
@@ -345,48 +376,27 @@ function Groups() {
                 type="text"
                 className="  flex-shrink  items-center  border-transparent bg-transparent outline-none transition-all duration-300 ease-in focus:border-transparent focus:ring-0  lg:inline-flex "
                 placeholder="Search Groups"
-                onChange={(e) => setSearch(e.target.value.trim())}
+                onChange={(e) => setGroupSearch(e.target.value.trim())}
               />
             </div>
 
-            {search && (
-              <div className="mt-2 h-fit">
-                {search ? (
-                  <div className="">
-                    <SearchResult className="mr-4 h-[60px]" search={search} />
-                    <SearchResult className="mr-4 h-[60px]" search={search} />
-                  </div>
-                ) : (
-                  <p className="it-c flex h-14  justify-center text-sm text-gray-400">
-                    No Recent Results
-                  </p>
-                )}
-              </div>
-            )}
-            {isActive && (
-              <div
-                ref={myRef}
-                className=" fixed top-32 space-y-2 rounded-lg bg-white p-2 shadow-2xl "
-              >
-                <div className="pl-2">
-                  <p className=" ">Notification Settings </p>
-                  <p className="text-xs text-gray-400">
-                    You can manage how you are notified about Watch updates.
-                  </p>
-                </div>
-                <div className="mt-2 border-b-2"></div>
-                <div className="icon-friends">
-                  <BsAppIndicator className="logo-friends bg-blue-500 p-2 text-white" />
-                  <p className="flex flex-1">Show notification dots</p>
-                </div>
-                <div className="icon-friends">
-                  <Settings className="logo-friends" />
-                  <p className="flex flex-1">Custom notifications</p>
-                </div>
-              </div>
+            {openNotSett && (
+              <NotSettings
+                sett2={'Custom notifications'}
+                sett1={'Show notification dots'}
+                title={'Notification Settings'}
+                desc={
+                  'You can manage how you are notified about Watch updates.'
+                }
+                Icon1={BsAppIndicator}
+                Icon2={SettingsAccessibility}
+              />
             )}
           </div>
-          <div className="mt-32 h-[74vh]  w-[360px] flex-col overflow-y-scroll ">
+          <div
+            style={{ scrollbarColor: 'red' }}
+            className=" sticky top-[208px] h-[74vh] w-[360px] flex-col  overflow-y-scroll "
+          >
             <div className="icon-friends">
               <Feed className="logo-friends bg-blue-500 text-white" />
               <p className="flex flex-1">Your Feed</p>
@@ -403,7 +413,7 @@ function Groups() {
             <div className="mt-2 border-b-2"></div>
             <p className="mt-3"> Groups you've Joined</p>
             <div className=" mt-2  ">
-              {groups.map((group) => (
+              {filterdGroupSearch.map((group) => (
                 <div
                   onClick={() =>
                     setGroupInfo([
@@ -430,7 +440,7 @@ function Groups() {
           </div>
         </div>
 
-        <div className=" ml-[360px] flex flex-grow flex-col bg-white">
+        <div className="  flex flex-grow flex-col bg-white">
           <div className=" flex w-full flex-col  justify-between ">
             <img
               src={groupInfo[0]?.groupImg}
@@ -468,11 +478,28 @@ function Groups() {
                     ))}
                   </div>
                 </div>
-                <div className=" flex w-1/2 justify-end space-x-3 py-2 ">
-                  <div className="flex h-10 w-fit items-center space-x-2 rounded-lg bg-gray-300 px-2 text-fbb hover:bg-gray-200">
+                <div className="relative flex w-1/2 justify-end space-x-3 py-2 ">
+                  <div
+                    onClick={() => setOpenJoinSett(true)}
+                    className=" relative flex h-10 w-fit items-center space-x-2 rounded-lg bg-gray-300 px-2 text-fbb hover:bg-gray-200"
+                  >
                     <UsersIcon className="h-5 w-5" />
                     <button className="">Joined</button>
                     <ChevronDownIcon className="h-5 w-5" />
+                    {openJoinSett && (
+                      <div ref={myRef} className="">
+                        <NotSettings
+                          sett2={'Custom notifications'}
+                          sett1={'Show notification dots'}
+                          title={'Notification Settings'}
+                          desc={
+                            'You can manage how you are notified about Watch updates.'
+                          }
+                          Icon1={BsAppIndicator}
+                          Icon2={SettingsAccessibility}
+                        />
+                      </div>
+                    )}
                   </div>
                   <div className="flex h-10 w-fit items-center space-x-2 rounded-lg bg-blue-500 px-2 text-white hover:brightness-110">
                     <button className="text-xl">+</button>
@@ -484,18 +511,40 @@ function Groups() {
                   </div>
                 </div>
               </div>
-              <div className="border-[1px ] mt-[10px] rounded-full  "></div>
-              <div className="mt-4 w-full px-5 ">
-                <div className="it-c sticky inset-x-0 top-20 left-0 flex justify-between ">
-                  <div className="flex space-x-3  ">
-                    {groupMenuIcons.map((menuIcon) => (
-                      <GroupMenuIcon title={menuIcon.title} />
-                    ))}
+            </div>
+            <div className="sticky top-[72px] z-10 w-full bg-white px-5 shadow-md ">
+              <div className="it-c flex justify-between ">
+                <div className="flex space-x-3  ">
+                  {groupMenuIcons.map((menuIcon, i) => (
+                    <GroupMenuIcon key={i} title={menuIcon.title} />
+                  ))}
+                </div>
+                <div className="it-c flex space-x-3">
+                  <div
+                    ref={searchRef}
+                    onClick={() => setOpenSearch(true)}
+                    className=" trans flex duration-700"
+                  >
+                    {openSearch ? (
+                      <div
+                        className=" trans flex w-11/12  items-center
+                      justify-start rounded-full bg-gray-200 duration-700"
+                      >
+                        <SearchIcon
+                          className={` ml-2 h-6 cursor-pointer text-gray-400 hover:text-blue-500 `}
+                        />
+                        <input
+                          type="text"
+                          className="  flex-shrink  items-center  border-transparent bg-transparent outline-none transition-all duration-300 ease-in focus:border-transparent focus:ring-0  lg:inline-flex "
+                          placeholder="Search in Group"
+                          onChange={(e) => setSearch(e.target.value.trim())}
+                        />
+                      </div>
+                    ) : (
+                      <SearchOutlined className="icon-group h-10 w-10 rounded-lg bg-gray-300 text-black" />
+                    )}
                   </div>
-                  <div className="it-c flex space-x-3">
-                    <SearchOutlined className="icon-group h-10 w-10 rounded-lg bg-gray-300 text-black" />
-                    <BsThreeDots className="icon-group h-10 w-10 rounded-lg bg-gray-300 text-black" />
-                  </div>
+                  <BsThreeDots className="icon-group h-10 w-10 rounded-lg bg-gray-300 text-black" />
                 </div>
               </div>
             </div>
@@ -507,7 +556,7 @@ function Groups() {
                     namez={groupInfo[0].groupName}
                   />
                   <div className="flex w-full flex-col">
-                    {posts.map(
+                    {filterdSearch.map(
                       (post) =>
                         groupInfo[0].id === post.data().group && (
                           <GroupPost
@@ -522,34 +571,7 @@ function Groups() {
                     )}
                   </div>
                 </div>
-                <div className="sticky  top-20 left-0 flex h-fit  w-[350px] flex-col space-y-2 rounded-lg bg-white p-4 shadow-2xl">
-                  <p className="">About</p>
-                  <p className="text-xs">
-                    {!readMore
-                      ? groupInfo[0]?.about?.slice(0, 90)
-                      : groupInfo[0]?.about}
-                  </p>
-                  <p className="text-sm" onClick={() => setReadMore(!readMore)}>
-                    {!readMore ? `Read More` : `Show Less`}
-                  </p>
-                  <AboutBoxItems
-                    Icon={BsGlobe}
-                    head={'Public'}
-                    desc={
-                      "Anyone can see who's in the group and what they post."
-                    }
-                  />
-                  <AboutBoxItems
-                    Icon={EyeIcon}
-                    head={'  Visible'}
-                    desc={'Anyone can find this group.'}
-                  />
-                  <AboutBoxItems
-                    Icon={PeopleOutlined}
-                    head={'General'}
-                    desc={''}
-                  />
-                </div>
+                <About about={groupInfo[0]?.about} />
               </div>
             </div>
           </div>
@@ -587,8 +609,10 @@ function GroupMenuIcon({ title }) {
   return (
     <button
       className={`${
-        title == 'Discussion' && `rounded-none border-b-2 border-blue-500 `
-      } icon-group`}
+        title == 'Discussion'
+          ? `rounded-none border-b-2 border-blue-500 `
+          : 'icon-group items-center justify-center'
+      } `}
     >
       {title}
     </button>
@@ -604,6 +628,93 @@ function SearchResult({ search }) {
         }
       />
       <p className="flex flex-1">{search ? `${search}` : 'Discover'}</p>
+    </div>
+  )
+}
+function CreateGroup() {
+  return (
+    <div className="fixed top-0 right-0 left-0 bottom-0 z-50 flex items-center justify-center bg-neutral-500 bg-opacity-60">
+      <div
+        className={`flex  w-[500px] flex-col rounded-xl bg-white  shadow-2xl transition-all duration-700 ease-in  lg:h-fit`}
+      >
+        <div className="flex h-[500px] flex-col p-4">
+          <p className="">New Group</p>
+          <div className="">
+            <p>Group Name</p>
+            <input type="text" />
+          </div>
+          <div className="">
+            <p>Group Photo</p>
+            <input type="text" />
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function NotSettings({ Icon1, Icon2, title, desc, sett1, sett2 }) {
+  return (
+    <div className=" absolute top-10 space-y-2 rounded-lg bg-white p-2 shadow-2xl ">
+      <div className="pl-2">
+        <p className=" ">{title}</p>
+        <p className="text-xs text-gray-400">{desc}</p>
+      </div>
+      <div className="mt-2 border-b-2"></div>
+      <div className="icon-friends">
+        <Icon1 className="logo-friends bg-blue-500 p-2 text-white" />
+        <p className="flex flex-1">{sett1}</p>
+      </div>
+      {Icon2 && (
+        <div className="icon-friends">
+          <Icon2 className="logo-friends" />
+          <p className="flex flex-1">{sett2}</p>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function About({ about }) {
+  const [readMore, setReadMore] = useState(false)
+  return (
+    <div className="sticky  top-36 left-0 flex h-fit  w-[350px] flex-col space-y-2 rounded-lg bg-white p-4 shadow-2xl">
+      <p className="">About</p>
+      <p dir={'rtl'} className=" text-xs ">
+        {!readMore ? (
+          <p>
+            {about?.slice(0, 90)}...
+            <a
+              className="hover:font-semibold hover:text-blue-500"
+              onClick={() => setReadMore(!readMore)}
+            >
+              See More
+            </a>
+          </p>
+        ) : (
+          <p>
+            {about}
+            <a
+              className="hover:font-semibold hover:text-blue-500"
+              onClick={() => setReadMore(!readMore)}
+            >
+              See Less
+            </a>
+          </p>
+        )}
+      </p>
+
+      <AboutBoxItems
+        Icon={BsGlobe}
+        head={'Public'}
+        desc={"Anyone can see who's in the group and what they post."}
+      />
+      <AboutBoxItems
+        Icon={EyeIcon}
+        head={'  Visible'}
+        desc={'Anyone can find this group.'}
+      />
+      <AboutBoxItems Icon={PeopleOutlined} head={'General'} desc={''} />
     </div>
   )
 }

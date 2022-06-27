@@ -19,7 +19,7 @@ function Stories() {
   const stories = [
     {
       name: 'Moti Yosef',
-      src: 'https://firebasestorage.googleapis.com/v0/b/instagram-clone-789cd.appspot.com/o/posts%2F2ktTb9TJsN78IEsx2tod%2Fimage?alt=media&token=9fedd3ae-b8b6-435d-a08f-e6b8f668793e',
+      src: 'https://firebasestorage.googleapis.com/v0/b/instagram-clone-789cd.appspot.com/o/posts%2FPG4UJeK8B2xnPxmRHLrA%2Fimage0?alt=media&token=ee713c38-9e06-49e2-a8b2-20168df523e6',
       profile: `${img}`,
     },
     {
@@ -56,47 +56,51 @@ function Stories() {
     })
   })
   return (
-    <div className="mx-auto flex justify-between space-x-2 lg:space-x-2 ">
+    <div className="relative mx-auto flex justify-between space-x-2 lg:space-x-2 ">
       {openStory && (
-        <div className="fixed top-[0px] right-0 left-0 bottom-0 z-50 flex  items-center justify-center bg-neutral-500 bg-opacity-50 ">
-          <div
-            ref={photoRef}
-            className=" left-[400px] flex flex-col items-center justify-center  rounded-md object-cover shadow-xl"
-          >
-            <div className=" flex w-full items-center justify-center  space-x-6">
-              {!storyNum == 0 && (
+        <div className="fixed top-[0px] right-0 left-0 bottom-0 z-50 flex  items-center justify-center bg-neutral-500 bg-opacity-80 ">
+          <div className=" left-[400px] flex flex-col items-center justify-center  rounded-md object-cover shadow-xl">
+            <div
+              ref={photoRef}
+              className=" fixed flex  items-center justify-center  space-x-6"
+            >
+              {!storyNum == 0 ? (
                 <ChevronLeftIcon
                   onClick={() => setStory(storyNum - 1)}
-                  className=" h-14 w-14 rounded-full bg-fbgr text-white "
+                  className=" h-7 w-7 rounded-full bg-gray-400 text-white shadow-xl  hover:brightness-90 "
                 />
+              ) : (
+                <ChevronLeftIcon className=" h-7 w-7 rounded-full bg-gray-400 text-white shadow-xl  " />
               )}
               <img
                 className="h-[500px] w-[300px] rounded-md object-cover shadow-xl transition-all duration-500 ease-in lg:h-[700px]  lg:w-[400px]"
                 src={stories[storyNum].src}
                 alt=""
               />
-              {storyNum !== stories.length - 1 && (
+              <div className=" absolute bottom-4 w-[70%] ">
+                <InputEmoji placeholder="Add a Comment..." />
+              </div>
+              {storyNum !== stories.length - 1 ? (
                 <ChevronRightIcon
                   onClick={() => setStory(storyNum + 1)}
-                  className=" h-14 w-14 rounded-full bg-fbgr text-white hover:ml-5 "
+                  className=" right-20 h-7 w-7 rounded-full bg-gray-400 text-white  hover:brightness-90 "
                 />
+              ) : (
+                <ChevronRightIcon className=" h-7 w-7 rounded-full bg-gray-400 text-white shadow-xl hover:mr-4 " />
               )}
-            </div>
-            <div className="  bottom-[130px] w-80">
-              <InputEmoji placeholder="Add a Comment..." />
             </div>
           </div>
         </div>
       )}
       {stories.map((story, i) => (
         <div
+          key={i}
           onClick={() => {
             setOpenStory(true)
             setStory(i)
           }}
         >
           <StoryCard
-            key={story.src}
             name={story.name}
             src={story.src}
             profile={story.profile}

@@ -21,10 +21,10 @@ import { useRecoilState } from 'recoil'
 import { darkMode } from '../atoms/darkMode'
 import Link from 'next/link'
 
-function Header({ dark }) {
+function Header() {
   const { data: session } = useSession()
   const myRef = useRef()
-  const [, setDark] = useRecoilState(darkMode)
+  const [dark, setDark] = useRecoilState(darkMode)
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
@@ -40,7 +40,9 @@ function Header({ dark }) {
 
   return (
     <div
-      className={`sticky top-0 z-50 flex items-center p-2   shadow-sm backdrop-blur-xl lg:px-5`}
+      className={`sticky top-0 z-50 flex items-center p-2  ${
+        dark ? 'bg-neutral-800' : 'bg-gray-100'
+      } shadow-sm transition-all duration-1000 ease-in lg:px-5`}
     >
       {/* Header Left */}
       <div className="ml-2 flex items-center transition-all duration-500 ease-in md:w-[310px]">
@@ -52,18 +54,20 @@ function Header({ dark }) {
             layout="fixed"
           />
         </Link>
-        <div className="ml-2 flex items-center  rounded-full lg:bg-gray-100">
-          <SearchIcon
-            className={` h-8 cursor-pointer hover:text-blue-500 ${
-              dark ? 'text-white' : 'hover:text-blue text-gray-500'
-            } md:ml-3 md:text-gray-600 `}
-          />
-          <input
-            type="text"
-            className=" hidden flex-shrink  items-center  border-transparent bg-transparent outline-none transition-all duration-300 ease-in focus:border-transparent focus:ring-0  lg:inline-flex "
-            placeholder="Search facebook"
-          />
-        </div>
+        {session && (
+          <div className="ml-2 flex items-center  rounded-full lg:bg-gray-100">
+            <SearchIcon
+              className={` h-8 cursor-pointer hover:text-blue-500 ${
+                dark ? 'text-white' : 'hover:text-blue text-gray-500'
+              } md:ml-3 md:text-gray-600 `}
+            />
+            <input
+              type="text"
+              className=" hidden flex-shrink  items-center  border-transparent bg-transparent outline-none transition-all duration-300 ease-in focus:border-transparent focus:ring-0  lg:inline-flex "
+              placeholder="Search facebook"
+            />
+          </div>
+        )}
       </div>
       <div className="flex flex-grow justify-center">
         {session && (

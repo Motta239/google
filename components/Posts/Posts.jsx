@@ -18,23 +18,24 @@ function Posts() {
 
     [db]
   )
-  console.log(posts)
+
   return (
     <div className="flex w-full items-center justify-center ">
       {posts.length >= 1 ? (
         <div className="flex w-full flex-col">
-          {posts.map((post) => (
-            <Post
-              key={post.id}
-              id={post.id}
-              username={post.data().username}
-              img={post.data().image}
-              userImg={post.data().profileImg}
-              caption={post.data().caption}
-              timestamp={post.data().timestamp}
-              edited={post.data().edited}
-              editTime={post.data().editTime}
-            />
+          {posts.map((post, i) => (
+            <div key={i} className="">
+              <Post
+                id={post.id}
+                username={post.data().username}
+                img={post.data().image}
+                userImg={post.data().profileImg}
+                caption={post.data().caption}
+                timestamp={post.data().timestamp}
+                edited={post.data().edited}
+                editTime={post.data().editTime}
+              />
+            </div>
           ))}
         </div>
       ) : (
