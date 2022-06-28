@@ -25,7 +25,7 @@ function SendMail() {
     <div className="">
       {openMessage && (
         <div className="">
-          <div className=" fixed bottom-0 right-24 z-50 flex h-[445px] w-[328px] min-w-[330px]  flex-col rounded-md bg-white shadow-2xl">
+          <div className=" fixed bottom-0 right-24 z-50 flex h-[445px] w-[328px] min-w-[330px] flex-col  justify-between rounded-md bg-white shadow-2xl">
             <div className="relative flex h-[55px] w-[328px] min-w-[277px] items-center space-x-[20px] border-b-[1px]    shadow-sm ">
               <div
                 onClick={() => {
@@ -48,9 +48,11 @@ function SendMail() {
                 <ChevronDownIcon className="h-5 w-5 cursor-pointer text-blue-500" />
               </div>
               <div className=" flex w-[250px] justify-around ">
-                <BsTelephoneFill className="h-5 w-5 cursor-pointer text-blue-500" />
-                <BsFillCameraVideoFill className="h-5 w-5 cursor-pointer text-blue-500" />
-                <AiOutlineMinus className="h-5 w-5 cursor-pointer text-blue-500 " />
+                <div className="flex space-x-2">
+                  <BsTelephoneFill className="h-5 w-5 cursor-pointer text-blue-500" />
+                  <BsFillCameraVideoFill className="h-5 w-5 cursor-pointer text-blue-500" />
+                  <AiOutlineMinus className="h-5 w-5 cursor-pointer text-blue-500 " />
+                </div>
                 <MdClose
                   onClick={() => setContactId({ openMessage: false })}
                   className="h-6 w-6 cursor-pointer text-blue-500"
@@ -58,12 +60,12 @@ function SendMail() {
               </div>
             </div>
 
-            <div className=" flex items-center justify-between p-2 ">
+            <div className=" flex items-center justify-between space-x-2 p-2 ">
               {
                 <div
                   className={`flex ${
                     messLength.length >= 50 && 'hidden'
-                  } transition-all duration-500 ease-in`}
+                  } space-x-2 transition-all duration-500 ease-in`}
                 >
                   <AiOutlinePlusCircle className="icon-mess" />
                   <MdOutlineAddAPhoto className="icon-mess" />

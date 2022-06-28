@@ -28,10 +28,10 @@ function NotCard({ name, image, message, dark }) {
       <img
         src={image}
         alt="profile pic"
-        className=" h-[50px] w-[75px] cursor-pointer rounded-full object-cover shadow-md"
+        className=" h-[50px] w-[50px] cursor-pointer rounded-full object-cover shadow-md"
       />
 
-      <div className="flex w-full flex-col space-y-1 ">
+      <div className="flex flex-grow flex-col space-y-1 ">
         <div className="">{name}</div>
         <div
           className={`text-[12px]  ${dark ? 'text-white' : 'text-gray-500'}`}

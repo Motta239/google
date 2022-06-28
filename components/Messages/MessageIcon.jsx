@@ -1,21 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
-import {
-  SearchIcon,
-  HomeIcon,
-  FlagIcon,
-  PlayIcon,
-  ShoppingCartIcon,
-  UserGroupIcon,
-  ViewGridIcon,
-  ChatIcon,
-  BellIcon,
-  ChevronDownIcon,
-  PencilIcon,
-} from '@heroicons/react/solid'
 import { useRecoilState } from 'recoil'
 import { postModal } from '../../atoms/postModal'
 import MessageCard from './MessageCard'
-import { DesktopComputerIcon } from '@heroicons/react/outline'
 
 function NotificationIcon({ Icon, name, dark }) {
   const myRefNot = useRef()
@@ -37,7 +23,7 @@ function NotificationIcon({ Icon, name, dark }) {
     {
       name: 'Moti Yosef',
       image:
-        'https://firebasestorage.googleapis.com/v0/b/instagram-clone-789cd.appspot.com/o/posts%2F2ktTb9TJsN78IEsx2tod%2Fimage?alt=media&token=9fedd3ae-b8b6-435d-a08f-e6b8f668793e',
+        'https://firebasestorage.googleapis.com/v0/b/instagram-clone-789cd.appspot.com/o/posts%2FPG4UJeK8B2xnPxmRHLrA%2Fimage0?alt=media&token=ee713c38-9e06-49e2-a8b2-20168df523e6',
       message: 'אחשלי הגיבור אתה ',
     },
     {
@@ -74,13 +60,7 @@ function NotificationIcon({ Icon, name, dark }) {
       item.message.toLowerCase().includes(search.toLowerCase().trim())
   )
   return (
-    <div
-      onMouseEnter={(e) => setStyle({ display: 'inline-flex' })}
-      onMouseLeave={(e) => setStyle({ display: 'none' })}
-      onClick={(e) => setStyle({ display: 'none' })}
-      ref={myRefNot}
-      className="hidden lg:inline-flex"
-    >
+    <div ref={myRefNot} className="hidden lg:inline-flex">
       <div className="  flex-col items-center justify-center ">
         <p
           style={style}
@@ -95,7 +75,7 @@ function NotificationIcon({ Icon, name, dark }) {
       />
       {openNot && (
         <div
-          className={` flex-end absolute right-[172px] top-[70px] z-10 flex h-fit w-[300px] flex-col justify-start  overflow-y-scroll rounded-xl ${
+          className={` flex-end absolute right-[100px] top-[70px] z-10 flex h-fit w-[300px] flex-col justify-start  overflow-y-scroll rounded-xl ${
             dark ? 'bg-cg' : 'bg-gray-100'
           }   shadow-xl scrollbar-hide  `}
         >
