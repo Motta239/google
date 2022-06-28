@@ -7,24 +7,17 @@ function SignIn({ providers }) {
         <img className=" w-40" src="https://links.papareact.com/t4i" alt="" />
 
         <div className="mt-40 flex flex-col items-center justify-center space-y-6">
-          {Object.values(providers).map((provider) => (
-            <div key={provider.name}>
-              <div className=" flex  items-center justify-center space-x-2">
-                <Provider Name={provider.name} />
-
-                <button
-                  className="h-12 w-44 items-center space-y-2 rounded-full bg-blue-500 p-4 text-sm  text-white hover:bg-gray-200 hover:text-blue-400"
-                  onClick={() =>
-                    SignIntoProvider(provider.id, {
-                      callbackUrl: 'http://facebook-neon.vercel.app',
-                    })
-                  }
-                >
-                  Sign in with {provider.name}
-                </button>
+          {providers &&
+            !!Object.keys(providers).length &&
+            Object.values(providers).map((provider) => (
+              <div key={provider.name}>
+                {' '}
+                <button onClick={() => SignIntoProvider(provider.id)}>
+                  {' '}
+                  Sign in with {provider.name}{' '}
+                </button>{' '}
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
     </>
