@@ -1,4 +1,5 @@
 import { getProviders, signIn as SignIntoProvider } from 'next-auth/react'
+import Header from '../../components/Header'
 function SignIn({ providers }) {
   return (
     <>
@@ -12,14 +13,14 @@ function SignIn({ providers }) {
                 <Provider Name={provider.name} />
 
                 <button
-                  className="h-12 w-48 items-center space-y-2 rounded-full bg-blue-500 p-4 text-sm  text-white hover:bg-gray-200 hover:text-blue-400"
+                  className="h-12 w-44 items-center space-y-2 rounded-full bg-blue-500 p-4 text-sm  text-white hover:bg-gray-200 hover:text-blue-400"
                   onClick={() =>
                     SignIntoProvider(provider.id, {
-                      callbackUrl: 'http://motiyosef.com',
+                      callbackUrl: 'http://localhost:3000',
                     })
                   }
                 >
-                  Sign in with{provider.name}
+                  Sign in with {provider.name}
                 </button>
               </div>
             </div>
@@ -29,7 +30,7 @@ function SignIn({ providers }) {
     </>
   )
 }
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const providers = await getProviders()
   return {
     props: {
