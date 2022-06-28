@@ -186,8 +186,10 @@ function Modal({ dark }) {
           </div>
         </div>
         <div className="flex h-[142px] flex-col p-1 ">
-          <div className=" ml-4 mr-4 flex h-1/2 items-center justify-between rounded-md   ">
-            <div className="ml-2 w-fit text-sm ">Add to your post </div>
+          <div className=" ml-4 mr-4 flex h-1/2 items-center justify-between rounded-md sm:sm:justify-center md:justify-evenly   ">
+            <div className="ml-2 hidden w-fit text-sm md:inline-block ">
+              Add to your post{' '}
+            </div>
             <div className="flex space-x-1 ">
               <CameraIcon
                 onClick={() => fileRef.current.click()}
