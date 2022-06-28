@@ -116,7 +116,7 @@ function Modal({ dark }) {
       <div
         ref={myRefNot}
         onClick={handleClickInside2}
-        className={`flex  w-[500px] flex-col rounded-xl ${
+        className={`flex  w-[360px] flex-col rounded-xl md:w-[500px] ${
           dark ? 'bg-cg text-white' : 'bg-white text-gray-500'
         } shadow-2xl transition-all duration-700 ease-in  lg:h-fit`}
       >
