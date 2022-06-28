@@ -11,7 +11,7 @@ function NotCard({ img, name, desc }) {
       />
       <div className="flex flex-1 flex-col  space-y-1 text-xs ">
         <p className="">{`${name} ${desc}`} </p>
-        {desc.contains('invited') && (
+        {desc.includes('invited') && (
           <div className="flex space-x-2 pb-2 ">
             <button className=" h-5 w-1/3 rounded-md bg-blue-500 text-white">
               Accept
