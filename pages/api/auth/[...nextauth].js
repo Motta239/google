@@ -15,11 +15,7 @@ export default NextAuth({
     }),
   ],
   secret: process.env.SECRET,
-  //   theme:{
-  //       logo: "https://links.papareact.com/sq0",
-  //       brandColor:"#F13287",
-  //       colorScheme:"auto"
-  //   }
+
   pages: {
     signIn: '/auth/signin',
   },
