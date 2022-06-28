@@ -45,7 +45,7 @@ function Groups() {
       אסטרטגיות מסחר
       ניתוח טכני
       ניתוח פונדומנטלי של השוק `,
-      members: 5.2 * Math.random() * 42,
+      members: 205,
     },
     {
       id: 2,
@@ -54,12 +54,23 @@ function Groups() {
       lastActive: 'last active 23 days ago',
       groupName: `love and marrige`,
       classification: 'public',
-      members: 5.2 * Math.random() * 42,
+      about: `
+      הקבוצה מטרתה ללמוד לעזור לשתף ולהחליף דעות בנושא
+      שוק ההון
+      מסחר יומי
+      הבורסה בארץ
+      פלטפורמות מסחר בארץ ובחול
+      אופציות מעוף
+      אופציות בנאסדק
+      אסטרטגיות מסחר
+      ניתוח טכני
+      ניתוח פונדומנטלי של השוק `,
+      members: 164,
     },
     {
       id: 3,
       groupImg:
-        'https://scontent.ftlv5-1.fna.fbcdn.net/v/t39.30808-6/280074859_565844661637129_5488603416162115401_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=8631f5&_nc_ohc=pCGKDV1dvJQAX-0jBa6&_nc_ht=scontent.ftlv5-1.fna&oh=00_AT9WJsVXgBge2Mpk-YO1pRG_Pu6hbrvsyH1gW-sIkGPIgg&oe=62B4ADB0',
+        'https://scontent.ftlv5-1.fna.fbcdn.net/v/t39.30808-6/280074859_565844661637129_5488603416162115401_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=8631f5&_nc_ohc=vhKRA6CIIhUAX9g4oDf&_nc_ht=scontent.ftlv5-1.fna&oh=00_AT8j9h0d1sKl595sc1fewMc0BapP-bun9T8LIVgj3acsTA&oe=62C08B30',
       lastActive: 'last active 23 days ago',
       groupName: `TLV Confessions - וידויים תל אביב`,
       classification: 'public',
@@ -70,7 +81,7 @@ function Groups() {
       https://goo.gl/dYFkqo
       אנחנו גם באינסטגרם (שם אין צנזורה):
       https://instagram.com/tlv_confessions `,
-      members: 5.2 * Math.random() * 42,
+      members: 40,
     },
     {
       id: 4,
@@ -80,7 +91,7 @@ function Groups() {
       groupName: `חידות מתמטיות`,
       classification: 'public',
       about: `קבוצה שנועדה לבעיות מאתגרות שבדרך כלל איננן בחומר הלימוד הרגיל של התואר במתמטיקה , חידות ובעיות עם פתרון יצירתי . "מחוץ לקופסא״`,
-      members: 5.2 * Math.random() * 42,
+      members: 48,
     },
 
     {
@@ -94,7 +105,7 @@ function Groups() {
       אתם מחפשים עבודה בתחום ההייטקו\או
       אתם מחפשים עובדים\יזממים בתחום
       הגעתם למקום הנכון! אנחנו הקבוצה הגדולה בארץ למשרות הייטק.`,
-      members: 5.2 * Math.random() * 42,
+      members: 32,
     },
     {
       id: 6,
@@ -107,7 +118,7 @@ function Groups() {
       שי רוט וחיים בבה מביאים לכם את הליין החדש בלופטים מדהימים, קהל איכותי! בר איכותי במחירי עלות.
       כל מה שהיה חסר לנו במועדונים ומסיבות אנחנו מביאים לכם כאן.
       הקבוצה נוצרה בשביל שתוכלו להישאר מעודכנים לפני ואחרי כל הפקה לקראת המסיבה הבאה. נעלה לכאן את התמונות שלכם. תרגישו חופשי לכתוב לנו הצעות, העדפות, בקשות, משוב וכמובן!! כמה שנהנתם איתנו :.`,
-      members: 5.2 * Math.random() * 42,
+      members: 4,
     },
     {
       id: 7,
@@ -120,7 +131,7 @@ function Groups() {
       יש דברים שמטרידים אותנו ההייטקיסטים שזר לא יבין.
       רוצים לשאול על תנאים בחברה מסויימת? איפה הכי טוב לאכול בהרצליה פיתוח? מה זה ESPP? למישהו יש המלצה לסדרה שאפשר לראות בטיסה לואלי? כדור פילאטיס טוב לשבת עליו? איזה אוזניות חוסמות רעש הכי מתאימות לאופן-ספייס? מה מועדון התעופה הכי טוב בשבילם?
       זה המקום לדבר על זה.`,
-      members: 5.2 * Math.random() * 42,
+      members: 12,
     },
     {
       id: 8,
@@ -138,7 +149,7 @@ function Groups() {
       דוגמאות שהן לא מחשבות מהמקלחת:
       * וואי, אני צריך לקנות עוד שמפו.
       * למה בני ישראל הלכו 40 שנה במדבר? מה, לא היה להם וויז?`,
-      members: 5.2 * Math.random() * 42,
+      members: 10,
     },
     {
       id: 9,
@@ -159,7 +170,7 @@ function Groups() {
       groupName: `מניות ומטבעות מתחת לרדאר`,
       classification: 'public',
       about: `הסקירות וההודעות להלן המידע המופץ בקבוצה אינם מהווים תחליף לייעוץ מקצועי. משקיע הקורא את המידע המופץ בקבוצה אינו יכול להניח כי הסתמכות על הדעות וההמלצות המובאות בה תיצור עבורו רווחים. מנהלי הקבוצה עשויים לסחור להחזיק למכור את המניהמובאות בסקירות/איתותים/הודעות או חלק מהן. מידע המופץ בקבוצה זו הינו אינפורמטיבי בלבד ולא נועד לשמש הצעה או שידול לקנות או למכור מניות כלשהן. אין המידע המופץ בקבוצה מתיימרת להיות ניתוח מלא של כל העובדות הנזכרות בה. דעות המובאות בסקירה עשויות להשתנות ללא שום הודעה נוספת. כמו כן אין במידע המופץ בקבוצה על מנת להטיל חבות כל שהיא על מנהלי הקבוצה או באים מטעמה. הכותבים בקבוצה אינם יועצי השקעות. ט.ל.ח`,
-      members: 5.2 * Math.random() * 42,
+      members: 321,
     },
     {
       id: 11,
@@ -171,7 +182,7 @@ function Groups() {
       about: `חיפוש עבודה בתחום ההיי-טק
       חיפוש מועמדים מוכשרים
       מפתחים ומתכנתים , בודקי תוכנה, תומכים, אבטחת מידע`,
-      members: 5.2 * Math.random() * 42,
+      members: 3,
     },
     {
       id: 12,
@@ -182,7 +193,7 @@ function Groups() {
       classification: 'public',
       about: `
       ההקבוצה נוסדה במטרה להוות קהילה למשקיעים וסוחרים אשר מחזיקים במניית חברת פלנטיר [PLTR] ותעודד שיח ראוי ושיתוף מידע מהימן.`,
-      members: 5.2 * Math.random() * 42,
+      members: 123,
     },
     {
       id: 13,
@@ -200,13 +211,13 @@ function Groups() {
       גל אורלביץ
       מאמן כושר גופני אישי וקבוצתי למשחקי כדור,
       בעל תואר ראשון בהצטיינות בחינוך הגופני במכללת וינגייט עם התמחות בטיפוח היציבה והתעמלות מונעת. בין היתר, שחקן כדורסל פעיל וסטודנט לפזיותרפיה `,
-      members: 5.2 * Math.random() * 42,
+      members: 3,
     },
 
     {
       id: 14,
       groupImg:
-        'https://scontent.ftlv5-1.fna.fbcdn.net/v/t39.30808-6/274874388_112948511325711_6623086249527088149_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=8631f5&_nc_ohc=m4LLT6Yf2JUAX-HDguA&_nc_ht=scontent.ftlv5-1.fna&oh=00_AT_l5TtYqYtsHFAlgDnqErtHtpgISHX2JBFxcer2MIJScg&oe=62B500E0',
+        'https://scontent.ftlv5-1.fna.fbcdn.net/v/t1.6435-9/121374409_10218910871506043_5148876984586655437_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=8631f5&_nc_ohc=mHJ__FtkQ3UAX_oIZe5&_nc_oc=AQmGlXTx84OkReAsOKWlygZP7XpZ3ApvPtW3dBjMq_XikyUIg9R4sNadsqnRbM6tGMsOZj_HU_8m82G6MfkJmSvT&tn=osZC3KjZEenLPwoO&_nc_ht=scontent.ftlv5-1.fna&oh=00_AT_G0Y173_93HQRSnAFbrYcNm9Vp3RVlBHTUXOyvUAa94w&oe=62DF1B3F',
       lastActive: 'last active 23 days ago',
       groupName: `סודות המסחר בבורסה-לימוד שוק ההון, ניתוח טכני, מסחר בורסה עולמי.
       `,
@@ -222,14 +233,14 @@ function Groups() {
       אסטרטגיות מסחר
       ניתוח טכני
       ניתוח פונדומנטלי של השוק `,
-      members: 5.2 * Math.random() * 42,
+      members: 43,
     },
   ]
   const friends = [
     {
       name: 'Moti Yosef',
-      src: 'https://firebasestorage.googleapis.com/v0/b/instagram-clone-789cd.appspot.com/o/posts%2F2ktTb9TJsN78IEsx2tod%2Fimage?alt=media&token=9fedd3ae-b8b6-435d-a08f-e6b8f668793e',
-      profile: `https://scontent.ftlv5-1.fna.fbcdn.net/v/t39.30808-1/285482394_1959451914245096_1524281326485344193_n.jpg?stp=dst-jpg_p320x320&_nc_cat=110&ccb=1-7&_nc_sid=7206a8&_nc_ohc=A9VWMq1BRBIAX8IEJFv&_nc_oc=AQmEPrpFAnWfhXeW72pV89waqwUtUYcvSLJRVCw8KBXfWDyyJSv0Ns-g3YxH-ZLKk-Je2Rcwagt2gXoe6XFgLOhU&_nc_ht=scontent.ftlv5-1.fna&oh=00_AT8j31hTOue6q1thDdJBw5-foHS9aSRwCkHRE603gJeGSA&oe=62B0B1AB`,
+      src: 'https://lh3.googleusercontent.com/a-/AOh14GjwMlnKOpt5purAmaskRIxiRt7LquzwL_0y_zFuSRQ=s96-c',
+      profile: `https://lh3.googleusercontent.com/a-/AOh14GjwMlnKOpt5purAmaskRIxiRt7LquzwL_0y_zFuSRQ=s96-c`,
     },
 
     {
@@ -262,7 +273,7 @@ function Groups() {
       name: 'Marina Kozslov',
       src: 'https://i.pinimg.com/474x/5b/2b/63/5b2b63772a0e763fac4a143924efa19a.jpg',
       profile:
-        'https://scontent.ftlv5-1.fna.fbcdn.net/v/t39.30808-1/243208465_1296760044087508_1532072654743544381_n.jpg?stp=dst-jpg_p320x320&_nc_cat=101&ccb=1-7&_nc_sid=7206a8&_nc_ohc=307C3t-AGcgAX-qXnAP&_nc_oc=AQlOyqkkXtBacRDrf703se708ThurgppwyWZ_wmYlQP_uQW5EF3yq4thLRXgFD-7nJNsS6k8O4Ib3cYcJVdPd5cM&tn=osZC3KjZEenLPwoO&_nc_ht=scontent.ftlv5-1.fna&oh=00_AT8Ln0hjdGj0pmysRUJYdpFxJLoKZI_6_CgwOSgprkqfnA&oe=62B0C9F8',
+        'https://scontent.ftlv5-1.fna.fbcdn.net/v/t39.30808-6/264893932_3195381757408914_8966061314064736497_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=8631f5&_nc_ohc=kZ0fp8_6_OUAX9Wu6_d&_nc_ht=scontent.ftlv5-1.fna&oh=00_AT-khE8Hpw16bZONdCs-WiXcRzCEobcSAPCskEzmWyjGLQ&oe=62C019EF',
     },
     {
       name: 'Michael Edward',
@@ -310,6 +321,8 @@ function Groups() {
       groupImg: groups[0]?.groupImg,
       groupName: groups[0]?.groupName,
       id: groups[0]?.id,
+      about: groups[0]?.about,
+      classification: groups[0]?.classification,
       members: groups[0]?.members.toFixed(1),
     },
   ])
@@ -342,19 +355,21 @@ function Groups() {
     post.data().caption.includes(search.toLowerCase().trim())
   )
   const filterdGroupSearch = groups.filter((group) =>
-    group.groupName.includes(groupSearch.toLowerCase().trim())
+    group.groupName
+      .toLocaleLowerCase()
+      .includes(groupSearch.toLowerCase().trim())
   )
 
   return (
     <div className=" ">
-      <div className="flex p-3">
+      <div className="flex  p-3">
         <div
           className={`sticky top-0 flex-col ${
             dark ? 'bg-neutral-800 text-white' : 'bg-white '
           } `}
         >
           <div
-            className={`sticky top-20 h-20 w-[360px] ${
+            className={`fixed top-20 h-28 w-[360px] ${
               dark ? 'bg-neutral-800 text-white' : 'bg-white '
             }
           `}
@@ -364,7 +379,7 @@ function Groups() {
               <Settings
                 onClick={() => setOpenNotSett(true)}
                 className={` ${
-                  openNotSett && 'bg-blue-200 text-blue-500'
+                  openNotSett && ' bg-blue-200 text-blue-500'
                 } h-7 w-7 rounded-full bg-gray-200 p-1 hover:fill-neutral-500 `}
               />
             </div>
@@ -531,7 +546,7 @@ function Groups() {
                       justify-start rounded-full bg-gray-200 duration-700"
                       >
                         <SearchIcon
-                          className={` ml-2 h-6 cursor-pointer text-gray-400 hover:text-blue-500 `}
+                          className={` icon-group ml-2 h-10 w-10 cursor-pointer text-gray-400 hover:text-blue-500 `}
                         />
                         <input
                           type="text"
@@ -541,7 +556,7 @@ function Groups() {
                         />
                       </div>
                     ) : (
-                      <SearchOutlined className="icon-group h-10 w-10 rounded-lg bg-gray-300 text-black" />
+                      <SearchIcon className="icon-group h-10 w-10 rounded-lg bg-gray-300 text-black" />
                     )}
                   </div>
                   <BsThreeDots className="icon-group h-10 w-10 rounded-lg bg-gray-300 text-black" />
@@ -619,18 +634,6 @@ function GroupMenuIcon({ title }) {
   )
 }
 
-function SearchResult({ search }) {
-  return (
-    <div className="icon-friends">
-      <SearchIcon
-        className={
-          search ? `logo-friends` : `logo-friends  bg-blue-500 text-white `
-        }
-      />
-      <p className="flex flex-1">{search ? `${search}` : 'Discover'}</p>
-    </div>
-  )
-}
 function CreateGroup() {
   return (
     <div className="fixed top-0 right-0 left-0 bottom-0 z-50 flex items-center justify-center bg-neutral-500 bg-opacity-60">
@@ -655,7 +658,7 @@ function CreateGroup() {
 
 function NotSettings({ Icon1, Icon2, title, desc, sett1, sett2 }) {
   return (
-    <div className=" absolute top-10 space-y-2 rounded-lg bg-white p-2 shadow-2xl ">
+    <div className=" absolute space-y-2 rounded-lg  p-2 shadow-2xl ">
       <div className="pl-2">
         <p className=" ">{title}</p>
         <p className="text-xs text-gray-400">{desc}</p>

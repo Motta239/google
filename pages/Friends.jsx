@@ -8,15 +8,15 @@ import {
   Settings,
 } from '@mui/icons-material'
 import React, { useState } from 'react'
-import Header from '../components/Header'
+
 import Link from 'next/link'
 
 function Friends() {
   const friends = [
     {
       name: 'Moti Yosef',
-      src: 'https://firebasestorage.googleapis.com/v0/b/instagram-clone-789cd.appspot.com/o/posts%2F2ktTb9TJsN78IEsx2tod%2Fimage?alt=media&token=9fedd3ae-b8b6-435d-a08f-e6b8f668793e',
-      profile: `https://scontent.ftlv5-1.fna.fbcdn.net/v/t39.30808-1/285482394_1959451914245096_1524281326485344193_n.jpg?stp=dst-jpg_p320x320&_nc_cat=110&ccb=1-7&_nc_sid=7206a8&_nc_ohc=A9VWMq1BRBIAX8IEJFv&_nc_oc=AQmEPrpFAnWfhXeW72pV89waqwUtUYcvSLJRVCw8KBXfWDyyJSv0Ns-g3YxH-ZLKk-Je2Rcwagt2gXoe6XFgLOhU&_nc_ht=scontent.ftlv5-1.fna&oh=00_AT8j31hTOue6q1thDdJBw5-foHS9aSRwCkHRE603gJeGSA&oe=62B0B1AB`,
+      src: 'https://lh3.googleusercontent.com/a-/AOh14GjwMlnKOpt5purAmaskRIxiRt7LquzwL_0y_zFuSRQ=s96-c',
+      profile: `https://lh3.googleusercontent.com/a-/AOh14GjwMlnKOpt5purAmaskRIxiRt7LquzwL_0y_zFuSRQ=s96-c`,
     },
     {
       name: 'Michael Edward',
@@ -76,9 +76,9 @@ function Friends() {
     },
     {
       name: 'Lola Bardamn',
-      src: 'https://i.pinimg.com/474x/fb/33/b9/fb33b94125d3ef63f22d536190a680a6.jpg',
+      src: 'https://scontent.ftlv5-1.fna.fbcdn.net/v/t39.30808-1/276250533_10227101476431462_8582232490558027704_n.jpg?stp=dst-jpg_p320x320&_nc_cat=104&ccb=1-7&_nc_sid=7206a8&_nc_ohc=3vnuY2wwg7AAX89YgXl&_nc_ht=scontent.ftlv5-1.fna&oh=00_AT8rA0Id6wFvJnwJGRoP6QtDmeX5NvBYyIMVskbtFL7ndg&oe=62BED1D6',
       profile:
-        'https://scontent.ftlv5-1.fna.fbcdn.net/v/t39.30808-1/275784307_1227640987767523_5087220239461352223_n.jpg?stp=dst-jpg_p320x320&_nc_cat=111&ccb=1-7&_nc_sid=7206a8&_nc_ohc=kpIM8rIKlrsAX_t0Que&_nc_ht=scontent.ftlv5-1.fna&oh=00_AT_UJIYqYrSUoeuh-9gF_RunEl0i79nZROBfLu7-_6IcNQ&oe=62B01ED0',
+        'https://scontent.ftlv5-1.fna.fbcdn.net/v/t39.30808-1/276250533_10227101476431462_8582232490558027704_n.jpg?stp=dst-jpg_p320x320&_nc_cat=104&ccb=1-7&_nc_sid=7206a8&_nc_ohc=3vnuY2wwg7AAX89YgXl&_nc_ht=scontent.ftlv5-1.fna&oh=00_AT8rA0Id6wFvJnwJGRoP6QtDmeX5NvBYyIMVskbtFL7ndg&oe=62BED1D6',
     },
 
     {
@@ -96,7 +96,7 @@ function Friends() {
   ]
   return (
     <div className=" ">
-      <div className=" min-h-[1200px]' flex h-screen p-3 shadow-2xl  ">
+      <div className=" min-h-[1200px]' flex  p-3 shadow-2xl  ">
         <div className="  fixed min-w-[260px]  flex-col">
           <div className="flex h-14 w-full items-center justify-between p-3 ">
             <p className="text-lg font-semibold ">Friends</p>
@@ -171,7 +171,9 @@ function FriendCard({ name, src, profile }) {
         <p className="ml-3 mt-3">{name}</p>
         <div className="flex  items-center pl-3">
           <img src={src} alt="" className="h-4 w-4 rounded-full" />
-          <p className="font-xm ml-3 text-gray-400">5 mutual friends</p>
+          <p className="font-xm ml-3 text-gray-400">{`${Math.floor(
+            Math.random() * 50
+          )} mutual friends`}</p>
         </div>
         <div className=" flex flex-col space-y-2 p-2">
           <button className="h-10 rounded-lg bg-blue-200 text-fbb hover:bg-gray-200">

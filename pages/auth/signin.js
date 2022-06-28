@@ -1,11 +1,4 @@
-import {
-  RiGoogleFill as Google,
-  RiFacebookFill as Facebook,
-  RiSpotifyFill,
-  RiYoutubeFill,
-} from 'react-icons/ri'
 import { getProviders, signIn as SignIntoProvider } from 'next-auth/react'
-import Header from '../../components/Header'
 function SignIn({ providers }) {
   return (
     <>
