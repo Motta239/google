@@ -477,10 +477,10 @@ function Post({
                 className="h-7 rounded-full "
                 src={comment.data().userImage}
               />
-              <p className="flex-1 text-sm">
-                <span className="font-bold">{comment.data().username}</span>{' '}
-                {comment.data().comment}
+              <p className="flex  text-sm">
+                <span className="font-bold">{comment.data().username}</span>
               </p>
+              <div className="flex flex-1">{comment.data().comment}</div>
 
               <Moment className="pr-5 text-sm" fromNow>
                 {comment.data().timestamp?.toDate()}
