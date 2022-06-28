@@ -1,6 +1,5 @@
 import NextAuth from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
-import GitHubProvider from 'next-auth/providers/github'
 import FaceBookProvider from 'next-auth/providers/facebook'
 export default NextAuth({
   providers: [
@@ -16,9 +15,6 @@ export default NextAuth({
   ],
   secret: process.env.SECRET,
 
-  pages: {
-    signIn: '/auth/signin',
-  },
   callbacks: {
     async session({ session, token, user }) {
       session.username = session.user.name
