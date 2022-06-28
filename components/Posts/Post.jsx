@@ -422,10 +422,7 @@ function Post({
                 Comment
               </p>
             </div>
-            <div
-              onClick={deletePost}
-              className="it-c flex h-10 w-1/3 cursor-pointer justify-center space-x-2 rounded-lg hover:bg-slate-100"
-            >
+            <div className="it-c flex h-10 w-1/3 cursor-pointer justify-center space-x-2 rounded-lg hover:bg-slate-100">
               <ReplySharpIcon className="pl-15 tb-5 cursor-pointer" />
               <p className="tb-5 hidden cursor-pointer lg:inline-block">
                 Share
