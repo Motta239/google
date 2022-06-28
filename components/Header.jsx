@@ -104,13 +104,12 @@ function Header() {
           </div>
         </div>
       ) : (
-        <button
-          className="items-center rounded-lg bg-blue-500 p-3 text-white hover:bg-blue-100 hover:text-blue-500"
-          onClick={signIn}
-        >
-          {' '}
-          Login
-        </button>
+        <Link href="/auth/signin">
+          <button className="items-center rounded-lg bg-blue-500 p-3 text-white hover:bg-blue-100 hover:text-blue-500">
+            {' '}
+            Login
+          </button>
+        </Link>
       )}
     </div>
   )
