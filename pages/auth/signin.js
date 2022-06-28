@@ -19,7 +19,7 @@ function SignIn({ providers }) {
                     })
                   }
                 >
-                  Sign in with {provider.name}
+                  Sign in with{provider.name}
                 </button>
               </div>
             </div>
