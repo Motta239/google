@@ -41,7 +41,6 @@ export async function getServerSideProps() {
 export default SignIn
 
 function Provider({ Name }) {
-  console.log(Name)
   return (
     <Name className="h-8 w-8 rounded-full   text-blue-800 transition-all  duration-500  ease-out hover:h-12 hover:w-12 " />
   )

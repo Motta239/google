@@ -264,7 +264,11 @@ function GroupPost({ id, username, userImg, key, caption, timestamp, docId }) {
       )}
 
       {caption.length > 350 && (
-        <p className="ml-5 text-sm" onClick={() => setReadMore(!readMore)}>
+        <p
+          className="ml-5 text-sm"
+          style={{ direction: 'rtl' }}
+          onClick={() => setReadMore(!readMore)}
+        >
           {!readMore ? `Read More` : `Show Less`}
         </p>
       )}

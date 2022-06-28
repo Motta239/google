@@ -51,7 +51,7 @@ function GroupInputBox({ group, dark }) {
           setImageToPost(false)
         }
       )
-      console.log('New doc added with ID', docRef.id)
+      // console.log('New doc added with ID', docRef.id)
     }
     inputRef.current.value = ''
     setName(false)

@@ -132,7 +132,7 @@ function Post({
       }
     })
   })
-  const uploadPost = async (e) => {
+  const updatePost = async (e) => {
     e.preventDefault()
     const washingtonRef = doc(db, 'posts', id)
     await updateDoc(washingtonRef, {
@@ -155,7 +155,6 @@ function Post({
   const deletePost = async () => {
     await deleteDoc(doc(db, 'posts', id))
     await deleteDoc(doc(db, 'posts', id, 'likes', session.user.uid))
-    console.log('post deleted')
   }
   const sendComment = async (e) => {
     const commentToSend = comment
@@ -264,7 +263,7 @@ function Post({
               // placeholder="Update Caption"
             />
           </div>
-          <div onClick={uploadPost} className="flex">
+          <div onClick={updatePost} className="flex">
             <button
               type="submit"
               className="hover:tb-5 h-10 w-20 rounded-full bg-blue-500 text-white hover:bg-white "
@@ -274,9 +273,7 @@ function Post({
           </div>
         </div>
       ) : (
-        <p className={`truncate p-5 ${caption.length < 5 && 'text-4xl'}`}>
-          {caption}
-        </p>
+        <p className="py-2 px-4">{caption}</p>
       )}
 
       {openPhotoModal && (

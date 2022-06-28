@@ -83,7 +83,7 @@ function Modal({ dark }) {
         )
       })
 
-      console.log('New doc added with ID', docRef.id)
+      // console.log('New doc added with ID', docRef.id)
 
       setImagesUrl([])
       setName(false)
