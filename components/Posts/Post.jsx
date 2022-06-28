@@ -355,9 +355,9 @@ function Post({
       {!images.length == 0 && (
         <div
           className={
-            images.length >= 4
+            images.length >= 3
               ? `flex grid-cols-3 gap-3 overflow-x-scroll scrollbar-hide lg:grid  lg:grid-rows-2 lg:gap-3 lg:overflow-x-hidden `
-              : 'js  flex w-full space-x-6 shadow-xl   sm:overflow-x-hidden'
+              : '  flex w-full space-x-6 shadow-xl   sm:overflow-x-hidden'
           }
         >
           {images.length === 1 ? (
