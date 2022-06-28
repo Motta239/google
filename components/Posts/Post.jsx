@@ -204,7 +204,7 @@ function Post({
         {open && (
           <div
             ref={myRef}
-            className={`flex-end absolute top-12 right-0 z-10  flex h-[156px] w-[128px]  flex-col justify-around rounded-md transition-all duration-300 ${
+            className={`flex-end absolute top-16 right-0 z-10  flex h-[156px] w-[140px]  flex-col justify-around rounded-md transition-all duration-300 ${
               dark ? 'bg-neutral-900 text-white' : 'bg-white'
             }  shadow-md `}
           >
