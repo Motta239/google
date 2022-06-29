@@ -1,4 +1,5 @@
 import { GiftIcon } from '@heroicons/react/solid'
+import Head from 'next/head'
 import {
   ChevronRight,
   People,
@@ -96,6 +97,10 @@ function Friends() {
   ]
   return (
     <div className=" ">
+      <Head>
+        <title>Facebook</title>
+        <link rel="icon" href="/icons8-facebook.svg" />
+      </Head>
       <div className="  flex  p-3 shadow-2xl  ">
         <div className="  fixed min-w-[260px]  flex-col">
           <div className="flex h-14 w-full items-center justify-between p-3 ">

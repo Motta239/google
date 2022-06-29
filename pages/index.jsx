@@ -15,7 +15,7 @@ function Home() {
     <div className={`min-h-[100vh] ${dark ? 'bg-zinc-800' : 'bg-gray-200'}`}>
       <Head>
         <title>Facebook</title>
-        <link rel="icon" href="/facebook.svg" />
+        <link rel="icon" href="/icons8-facebook.svg" />
       </Head>
 
       <div className=" relative flex items-center lg:space-x-2">

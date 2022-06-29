@@ -410,10 +410,7 @@ function Groups() {
               </div>
             )}
           </div>
-          <div
-            style={{ scrollbarColor: 'red' }}
-            className=" sticky top-[208px] h-[74vh] w-[360px] flex-col  overflow-y-scroll "
-          >
+          <div className=" sticky top-[208px] h-[74vh] w-[360px] flex-col  overflow-y-scroll ">
             <div className="icon-friends">
               <Feed className="logo-friends bg-blue-500 text-white" />
               <p className="flex flex-1">Your Feed</p>
