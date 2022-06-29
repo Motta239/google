@@ -655,7 +655,7 @@ function CreateGroup() {
   )
 }
 
-function NotSettings({ Icon1, Icon2, title, desc, sett1, sett2 }) {
+function NotSettings({ Icon1, Icon2, Icon3, title, desc, sett1, sett2 }) {
   return (
     <div className=" left- absolute top-0 z-50 w-fit space-y-2 rounded-lg bg-white p-2 shadow-2xl ">
       <div className="pl-2">
@@ -671,6 +671,12 @@ function NotSettings({ Icon1, Icon2, title, desc, sett1, sett2 }) {
         <div className="icon-friends">
           <Icon2 className="logo-friends" />
           <p className="flex flex-1">{sett2}</p>
+        </div>
+      )}
+      {Icon3 && (
+        <div className="icon-friends">
+          <Icon3 className="logo-friends" />
+          <p className="flex flex-1">{sett3}</p>
         </div>
       )}
     </div>
