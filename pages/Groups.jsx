@@ -369,7 +369,7 @@ function Groups() {
           } `}
         >
           <div
-            className={`fixed top-20 h-28 w-[360px] ${
+            className={` h-28 w-[360px] ${
               dark ? 'bg-neutral-800 text-white' : 'bg-white '
             }
           `}
@@ -396,16 +396,18 @@ function Groups() {
             </div>
 
             {openNotSett && (
-              <NotSettings
-                sett2={'Custom notifications'}
-                sett1={'Show notification dots'}
-                title={'Notification Settings'}
-                desc={
-                  'You can manage how you are notified about Watch updates.'
-                }
-                Icon1={BsAppIndicator}
-                Icon2={SettingsAccessibility}
-              />
+              <div className="relative">
+                <NotSettings
+                  sett2={'Custom notifications'}
+                  sett1={'Show notification dots'}
+                  title={'Notification Settings'}
+                  desc={
+                    'You can manage how you are notified about Watch updates.'
+                  }
+                  Icon1={BsAppIndicator}
+                  Icon2={SettingsAccessibility}
+                />
+              </div>
             )}
           </div>
           <div
@@ -564,7 +566,7 @@ function Groups() {
               </div>
             </div>
             <div className="  relative">
-              <div className="  flex justify-center space-x-10 bg-gray-100 p-5">
+              <div className=" flex min-h-[120vh] justify-center space-x-10 bg-gray-100 p-5">
                 <div className="  h-fit w-[800px] shadow-xl">
                   <GroupInputBox
                     group={groupInfo[0].id}
@@ -658,7 +660,7 @@ function CreateGroup() {
 
 function NotSettings({ Icon1, Icon2, title, desc, sett1, sett2 }) {
   return (
-    <div className=" absolute space-y-2 rounded-lg  p-2 shadow-2xl ">
+    <div className=" left- absolute top-0 z-50 w-fit space-y-2 rounded-lg bg-white p-2 shadow-2xl ">
       <div className="pl-2">
         <p className=" ">{title}</p>
         <p className="text-xs text-gray-400">{desc}</p>
