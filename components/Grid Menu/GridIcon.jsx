@@ -90,13 +90,7 @@ function NotificationIcon({ Icon, name, dark }) {
       item.desc.toLowerCase().includes(search.toLowerCase().trim())
   )
   return (
-    <div
-      onMouseEnter={(e) => setStyle({ display: 'inline-flex' })}
-      onMouseLeave={(e) => setStyle({ display: 'none' })}
-      onClick={(e) => setStyle({ display: 'none' })}
-      ref={myRefNot}
-      className="hidden lg:inline-flex"
-    >
+    <div ref={myRefNot} className="hidden lg:inline-flex">
       <div className="flex flex-col items-center justify-center ">
         <p
           style={style}

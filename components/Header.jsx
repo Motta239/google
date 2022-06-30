@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { MdDarkMode } from 'react-icons/md'
 import {
@@ -20,6 +20,19 @@ import MessageIcon from './Messages/MessageIcon'
 import { useRecoilState } from 'recoil'
 import { darkMode } from '../atoms/darkMode'
 import Link from 'next/link'
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  orderBy,
+  query,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+} from 'firebase/firestore'
+import { db, storage } from '../firebase'
 
 function Header() {
   const { data: session } = useSession()
@@ -37,6 +50,29 @@ function Header() {
       setOpen(false)
     }
   }
+  const setDarkMode = async () => {
+    if (!session) return
+    if (dark) {
+      await setDoc(doc(db, 'darkMode', `${session.user.name}`), {
+        dark1: false,
+      })
+    } else {
+      await setDoc(doc(db, 'darkMode', `${session.user.name}`), {
+        dark1: true,
+      })
+    }
+  }
+  useEffect(
+    () =>
+      setTimeout(() => {
+        onSnapshot(query(collection(db, 'darkMode')), (snapshot) => {
+          snapshot.docs.map((snap) => {
+            snap.id == session?.user.name && console.log(snap.data().dark1)
+          })
+        })
+      }, 100),
+    []
+  )
 
   return (
     <div
@@ -45,7 +81,7 @@ function Header() {
       } shadow-sm transition-all duration-1000 ease-in lg:px-5`}
     >
       {/* Header Left */}
-      <div className="ml-2 flex items-center transition-all duration-500 ease-in md:w-[310px]">
+      <div className="ml-2 flex items-center transition-all duration-500 ease-in lg:w-[310px]">
         <Link href="/">
           <Image
             src="https://links.papareact.com/5me"
@@ -98,7 +134,10 @@ function Header() {
           </div>
           <div className="">
             <MdDarkMode
-              onClick={() => setDark(!dark)}
+              onClick={() => {
+                setDarkMode()
+                setDark(!dark)
+              }}
               className={`iconDark ${dark && 'bg-blue-200 text-blue-500'}`}
             />
           </div>

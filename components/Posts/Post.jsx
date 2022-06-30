@@ -39,16 +39,7 @@ import InputEmoji from 'react-input-emoji'
 import { darkMode } from '../../atoms/darkMode'
 import { BiComment, BiCommentAdd, BiMessageEdit } from 'react-icons/bi'
 import { MdComment, MdInsertComment } from 'react-icons/md'
-function Post({
-  id,
-  username,
-  userImg,
-
-  caption,
-  edited,
-  editTime,
-  timestamp,
-}) {
+function Post({ id, username, userImg, caption, edited, editTime, timestamp }) {
   const { data: session } = useSession()
   const [{ email, name }, setContactId] = useRecoilState(contactId)
   const [dark, setDark] = useRecoilState(darkMode)
@@ -441,7 +432,7 @@ function Post({
       {com && (
         <form className="it-c flex p-4">
           <img
-            src={userImg}
+            src={session?.user?.image}
             className=" mr-3 h-12 w-12
           rounded-full border object-contain p-1  "
             alt=""
