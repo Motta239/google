@@ -57,6 +57,7 @@ function Post({ id, username, userImg, caption, edited, editTime, timestamp }) {
   const [editPost, setEditPost] = useState(false)
   const [openPhotoModal, setOpenPhotoModal] = useState(false)
   const inputRef = useRef(false)
+  const editedInputRef = useRef('')
   const [count, setCount] = useState(1)
   const [updatedCom, setUpdatedCom] = useState('')
   const [sendCommentModal, setSendCommentMoadl] = useState(false)
@@ -127,7 +128,7 @@ function Post({ id, username, userImg, caption, edited, editTime, timestamp }) {
     e.preventDefault()
     const washingtonRef = doc(db, 'posts', id)
     await updateDoc(washingtonRef, {
-      caption: updatedCom,
+      caption: editedInputRef.current?.value,
       edited: 'Edited',
       editTime: serverTimestamp(),
     })
@@ -244,16 +245,20 @@ function Post({ id, username, userImg, caption, edited, editTime, timestamp }) {
         )}
       </div>
       {editPost ? (
-        <div className="it-c flex justify-center space-x-2 p-5">
-          <div className="w-96">
-            <InputEmoji
-              ref={inputRef}
-              value={caption}
-              onChange={setUpdatedCom}
-              theme={'dark'}
-              // placeholder="Update Caption"
-            />
-          </div>
+        <div
+          ref={updateCapRef}
+          className="it-c flex w-full flex-col justify-center space-y-2 p-5"
+        >
+          <textarea
+            ref={editedInputRef}
+            onChange={setUpdatedCom}
+            className={`min-h-32  max-h-40 ${
+              dark && 'bg-neutral-700 text-white'
+            } w-full rounded-lg border-none shadow-lg`}
+          >
+            {caption}
+          </textarea>
+
           <div onClick={updatePost} className="flex">
             <button
               type="submit"
@@ -271,73 +276,69 @@ function Post({ id, username, userImg, caption, edited, editTime, timestamp }) {
         <div className="it-c fixed top-[0px] right-0 left-0 bottom-0 z-50 flex   justify-center bg-neutral-500 bg-opacity-50 ">
           <div
             ref={photoRef}
-            className="  top-[200px] left-[400px] flex flex-col rounded-md object-cover shadow-xl"
+            className="   flex flex-col rounded-md object-contain shadow-xl"
           >
             <img
-              className="  h-[400px] w-[300px] rounded-md object-cover shadow-xl transition-all duration-500 ease-in lg:h-[700px] lg:w-[800px]"
+              className="  h-[400px] w-[300px] rounded-md object-contain shadow-xl transition-all duration-500 ease-in lg:h-[700px] lg:w-[800px]"
               src={images[count].data().image}
               alt=""
             />
-            <div className=" fixed rounded-lg  p-3  ">
-              <div className=" h-14 w-14 ">
-                <ArrowCircleRightIcon
-                  onClick={() => {
-                    setCount(count + 1)
-                    if (count > images.length - 2) {
-                      setCount(0)
-                    }
-                  }}
-                  className="h-14 w-14 rotate-180 "
+
+            <div className="flex justify-center ">
+              <ArrowCircleRightIcon
+                onClick={() => {
+                  setCount(count + 1)
+                  if (count > images.length - 2) {
+                    setCount(0)
+                  }
+                }}
+                className="h-14 w-14 rotate-180 "
+              />
+              {hasLiked ? (
+                <HeartIconFilled
+                  onClick={likePost}
+                  className="h-14 w-14 text-red-500"
                 />
-                <ArrowCircleRightIcon
-                  onClick={() => {
-                    setCount(count - 1)
-                    if (count <= 0) {
-                      setCount(images.length - 1)
-                    }
-                  }}
-                  className="  h-14 w-14  "
-                />
-                {hasLiked ? (
-                  <HeartIconFilled
-                    onClick={likePost}
-                    className="h-14 w-14 text-red-500"
+              ) : (
+                <HeartIcon onClick={likePost} className="h-14 w-14" />
+              )}
+
+              <div ref={myRefComment} className=" trans relative duration-700">
+                {!sendCommentModal ? (
+                  <ChatIcon
+                    onClick={() => setSendCommentMoadl(!sendCommentModal)}
+                    className="h-14 w-14"
                   />
                 ) : (
-                  <HeartIcon onClick={likePost} className="h-14 w-14" />
+                  sendCommentModal && (
+                    <div className="flex w-60">
+                      <InputEmoji
+                        value={comment}
+                        ref={inputRef}
+                        onChange={setComment}
+                        placeholder=""
+                      />
+                      <button
+                        type="submit"
+                        disabled={!comment.trim()}
+                        onClick={sendComment}
+                        className="absolute left-36 top-[14px] w-[6px] font-semibold text-blue-400"
+                      >
+                        Send
+                      </button>
+                    </div>
+                  )
                 )}
-
-                <div
-                  ref={myRefComment}
-                  className=" trans relative duration-700"
-                >
-                  {!sendCommentModal ? (
-                    <ChatIcon
-                      onClick={() => setSendCommentMoadl(!sendCommentModal)}
-                      className="h-14 w-14"
-                    />
-                  ) : (
-                    sendCommentModal && (
-                      <div className="flex w-60">
-                        <InputEmoji
-                          value={comment}
-                          ref={inputRef}
-                          onChange={setComment}
-                          placeholder=""
-                        />
-                        <button
-                          type="submit"
-                          disabled={!comment.trim()}
-                          onClick={sendComment}
-                          className="absolute left-36 top-[14px] w-[6px] font-semibold text-blue-400"
-                        >
-                          Send
-                        </button>
-                      </div>
-                    )
-                  )}
-                </div>
               </div>
+              <ArrowCircleRightIcon
+                onClick={() => {
+                  setCount(count - 1)
+                  if (count <= 0) {
+                    setCount(images.length - 1)
+                  }
+                }}
+                className="  h-14 w-14  "
+              />
             </div>
           </div>
         </div>
