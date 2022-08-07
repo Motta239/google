@@ -13,7 +13,7 @@ function List() {
         userData.map((ticker, i) => (
           <Link href={`/finance/${ticker.ticker}`}>
             <div
-              key={ticker.ticker}
+              key={i}
               className=" flex cursor-pointer flex-col transition duration-200 ease-in-out  hover:bg-gray-50 "
             >
               <WatchlistMovers ticker={ticker.ticker} desc={ticker.desc} />

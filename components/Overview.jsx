@@ -2,76 +2,25 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import OverviewMovers from './OverviewMovers'
 import { useRouter } from 'next/router'
-
+import { useFetch, getUserData, setUserData } from './useFetch'
 function Overview() {
-  const movers = [
-    [
-      {
-        id: 1,
-        symbol: 'DJI',
-        ticker: 'Dow Jones',
-        price: 31388.15,
-        percentChange: -0.15,
-        change: -46.42,
-      },
-      {
-        id: 2,
-        symbol: 'IXIC',
-        ticker: 'Nasdaq',
-        price: 11635.31,
-        percentChange: 0.12,
-        change: 13.96,
-      },
-      {
-        id: 3,
-        symbol: 'SPY',
-        ticker: 'S&P 500',
-        price: 3899.38,
-        percentChange: -0.083,
-        change: -3.24,
-      },
-      {
-        id: 4,
-        symbol: 'RUT',
-        ticker: 'Russell',
-        price: 11635.31,
-        percentChange: 0.12,
-        change: 13.96,
-      },
-      {
-        id: 5,
-        symbol: 'VIX',
-        ticker: 'VIX',
-        price: 11635.31,
-        percentChange: 0.12,
-        change: 13.96,
-      },
-    ],
-  ]
   const router = useRouter()
   const uid = router?.query?.uid?.toLocaleUpperCase()
+  const [update, setUpdate] = useState(null)
+  const [url, setUrl] = useState(
+    `https://financialmodelingprep.com/api/v3/quotes/index?apikey=28d6ee65329243c33f2324e5651df196`
+  )
+  const { data: indexData } = useFetch(url)
+  useEffect(() => {
+    filterOverview('US', 0)
+  }, [])
+  console.log(indexData)
   const [tab, setTab] = useState(0)
-  const [update, setupdate] = useState(movers[0])
-  const [name, setName] = useState('')
   const filterOverview = (name, num) => {
     if (tab == num) return
     setTab(num)
-    setupdate(movers[num])
-    setName(name)
+    setUpdate(indexData)
   }
-  // useEffect(() => {
-  //   const url = `https://financialmodelingprep.com/api/v3/search?query=${name}&limit=6&=NASDAQ&apikey=920db31b16fa2246a1ea1cc5e3551659`
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch(url)
-  //       const json = await response.json()
-  //       setupdate(json)
-  //     } catch (error) {
-  //       console.log('error', error)
-  //     }
-  //   }
-  //   fetchData()
-  // }, [name])
 
   return (
     <div
@@ -102,13 +51,23 @@ function Overview() {
             <p className="">Asia</p>
           </div>
           <div
-            onClick={() => filterOverview(3)}
+            onClick={() => {
+              filterOverview(3)
+              setUrl(
+                `https://financialmodelingprep.com/api/v3/quotes/forex?apikey=28d6ee65329243c33f2324e5651df196`
+              )
+            }}
             className={`${tab == 3 && 'active'} filterBtn `}
           >
             <p className="">Currencies</p>
           </div>
           <div
-            onClick={() => filterOverview(4)}
+            onClick={() => {
+              filterOverview(4)
+              setUrl(
+                `https://financialmodelingprep.com/api/v3/quotes/forex?apikey=28d6ee65329243c33f2324e5651df196`
+              )
+            }}
             className={`${tab == 4 && 'active'} filterBtn `}
           >
             <p className="">Crypto</p>
@@ -128,8 +87,10 @@ function Overview() {
                 <OverviewMovers
                   ticker={ticker.symbol}
                   price={ticker.price}
-                  change={ticker.change}
-                  percentChange={ticker.percentChange}
+                  change={ticker.change.toString().slice(0, 7)}
+                  percentChange={ticker.changesPercentage
+                    .toString()
+                    .slice(0, 5)}
                 />
               </div>
             </Link>

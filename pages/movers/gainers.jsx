@@ -1,6 +1,3 @@
-import React, { useEffect, useRef, useState } from 'react'
-
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import WatchlistMovers from '../../components/WatchlistMOvers'
 import { SpinnerCircular } from 'spinners-react'
@@ -18,7 +15,7 @@ function Gainers() {
   }
   return (
     <>
-      {tickers == null || tickers[0] == undefined ? (
+      {!tickers ? (
         <div className="">
           <p>Limit Reach Change Key Moti</p>
 
@@ -35,17 +32,17 @@ function Gainers() {
                 // <Link href={`/finance/${ticker.symbol}:${ticker.exchangeShortName}`}>
                 <div
                   onClick={() => {
-                    goToPage(ticker[0].symbol)
+                    goToPage(ticker.symbol)
                   }}
-                  key={ticker[0].id}
+                  key={ticker.id}
                   className=" flex cursor-pointer flex-col transition duration-200 ease-in-out  hover:bg-gray-50 "
                 >
                   <WatchlistMovers
-                    ticker={ticker[0].symbol}
-                    price={ticker[0].price}
-                    change={ticker[0].change?.toFixed(2)}
-                    desc={ticker[0].companyName}
-                    percentChange={ticker[0].percentChange?.toFixed(2)}
+                    ticker={ticker.symbol}
+                    price={ticker.price}
+                    change={ticker.change?.toFixed(2)}
+                    desc={ticker.companyName}
+                    percentChange={ticker.percentChange?.toFixed(2)}
                   />
                 </div>
                 // </Link>

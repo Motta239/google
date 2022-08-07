@@ -1,9 +1,9 @@
 import { ChevronDownIcon } from '@heroicons/react/solid'
-import { People, Person, Web, WebhookSharp } from '@mui/icons-material'
+import { People, Person, Web } from '@mui/icons-material'
 
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 
-function About({ desc, ceo, founded, website, employees, img, head }) {
+function About({ desc, ceo, website, employees, name }) {
   const [toggle, setToggleAbout] = useState(true)
 
   return (
@@ -14,7 +14,7 @@ function About({ desc, ceo, founded, website, employees, img, head }) {
         onClick={() => setToggleAbout(!toggle)}
         className="flex justify-between py-4"
       >
-        <p> {head}</p>
+        <p> About</p>
 
         <ChevronDownIcon
           className={`h-5 w-5 transition-all  duration-1000  ease-out ${
@@ -24,7 +24,18 @@ function About({ desc, ceo, founded, website, employees, img, head }) {
       </div>
 
       <div className="">
-        {toggle && <p className="  p-2 text-[0.75rem]">{desc}</p>}
+        {toggle && (
+          <p className="  p-2 text-[0.75rem]">
+            {desc?.slice(0, 400)}{' '}
+            <a
+              href={`https://en.wikipedia.org/wiki/${name}`}
+              target="_blank"
+              className="hover:scale-110 hover:text-blue-500"
+            >
+              Wikipedia
+            </a>
+          </p>
+        )}
 
         <div className=" flex items-center justify-between border-t p-3 text-xs text-gray-600 ">
           <div className="flex items-center space-x-1  ">

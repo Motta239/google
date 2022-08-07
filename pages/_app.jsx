@@ -7,10 +7,8 @@ import Overview from '../components/Overview'
 import Helper from '../components/Helper'
 import { getUserData } from '../components/useFetch'
 import { db } from '../firebase'
-import React, { useEffect, useState, useRef, memo } from 'react'
+
 function App({ Component, pageProps: { session, ...pageProps } }) {
-  const data = getUserData(db)
-  const tickers = data?.data?.map((t) => t.ticker)
   return (
     <SessionProvider session={session}>
       <Header />
@@ -22,7 +20,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
         <DiscoverMore />
         <Footer />
       </div>
-      <Helper tickers={tickers} />
+      <Helper />
     </SessionProvider>
   )
 }

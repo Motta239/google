@@ -8,9 +8,8 @@ import {
   SearchIcon,
 } from '@heroicons/react/solid'
 import { ArrowBackOutlined, Refresh } from '@mui/icons-material'
-import { getUserData } from './useFetch'
-import { db } from '../firebase'
-function Helper(tickers) {
+
+function Helper() {
   const router = useRouter()
   const uid = router.query.uid?.toLocaleUpperCase()
   const { data: session } = useSession()
