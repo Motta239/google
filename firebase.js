@@ -3,12 +3,12 @@ import { getFirestore } from 'firebase/firestore'
 import { getStorage } from 'firebase/storage'
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBjvJGU8jHzubO9A27LK3NS4oQROJGiuB0',
-  authDomain: 'instagram-clone-789cd.firebaseapp.com',
-  projectId: 'instagram-clone-789cd',
-  storageBucket: 'instagram-clone-789cd.appspot.com',
-  messagingSenderId: '694595159088',
-  appId: '1:694595159088:web:4bd9986b43a44cc04219f5',
+  apiKey: 'AIzaSyDwibK_Hw9O5e9IKi3yYIPbzoIHwLSgQcY',
+  authDomain: 'finance-2a4d6.firebaseapp.com',
+  projectId: 'finance-2a4d6',
+  storageBucket: 'finance-2a4d6.appspot.com',
+  messagingSenderId: '590089754466',
+  appId: '1:590089754466:web:2517d19de9f6d2c08bbe3b',
 }
 
 // Initialize Firebase
@@ -17,12 +17,3 @@ const db = getFirestore()
 const storage = getStorage()
 
 export { app, db, storage }
-
-// const firebaseConfig = {
-//   apiKey: 'AIzaSyDM7MRMISD-hOotv4pJRxEbI1Q-hZxQFy4',
-//   authDomain: 'facebook-clone-b27b8.firebaseapp.com',
-//   projectId: 'facebook-clone-b27b8',
-//   storageBucket: 'facebook-clone-b27b8.appspot.com',
-//   messagingSenderId: '242169864446',
-//   appId: '1:242169864446:web:294a80a9279836d1cec5af',
-// }

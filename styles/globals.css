@@ -3,55 +3,30 @@
 @tailwind utilities;
 
 @layer components {
-  .navBtn {
-    @apply relative hidden h-6 cursor-pointer transition-all ease-in hover:scale-125 md:inline-flex;
+  .active {
+    @apply bg-blue-100 font-semibold  text-[#185abc] hover:shadow-lg;
   }
-  .btn {
-    @apply h-7 cursor-pointer transition-all duration-150 ease-in hover:scale-125;
+
+  .filterBtn {
+    @apply flex h-8 cursor-pointer items-center justify-center space-x-1 rounded-full px-3 py-[2px] text-sm transition-all duration-200 ease-out hover:bg-gray-100 hover:shadow-lg active:text-xs;
   }
-  .icon {
-    @apply h-10 w-10 cursor-pointer rounded-full bg-gray-200 p-2 text-black hover:text-blue-500;
+  .portfolioBtn {
+    @apply flex h-8 cursor-pointer items-center justify-center space-x-1 rounded-full px-3 py-[2px] text-[10px] transition-all duration-200 ease-out hover:bg-gray-100 hover:shadow-lg active:text-xs md:text-[13px];
   }
-  .iconDark {
-    @apply h-10 w-10 cursor-pointer rounded-full bg-gray-200 p-2 text-black hover:text-blue-500;
+
+  .marketTrendsBtn {
+    @apply m-1 flex w-fit cursor-pointer items-center space-x-1 rounded-full border bg-white px-2 py-[2px] text-xs hover:bg-gray-50;
   }
-  .inputIcon {
-    @apply flex flex-grow cursor-pointer  items-center justify-center space-x-1 rounded-md p-2 hover:bg-gray-100;
+  .btnText {
+    @apply text-xs text-gray-800;
   }
-  .trans {
-    @apply transition-all  ease-in;
+  .helperBtn {
+    @apply h-7 w-7 rounded-lg p-[2px] text-gray-700 transition-all duration-200 ease-out hover:bg-gray-100 hover:text-blue-500 hover:shadow-2xl hover:backdrop-brightness-125 active:scale-95;
   }
-  .icon-floater {
-    @apply h-8 w-8 rounded-full transition-all  duration-500  ease-out hover:h-12 hover:w-12;
+  .discoverBtn {
+    @apply rounded-lg bg-[#d9d9d9]  p-[2px] text-gray-700 transition-all duration-200 ease-out hover:bg-gray-100 hover:text-blue-500 hover:shadow-2xl hover:backdrop-brightness-125;
   }
-  .icon-mess {
-    @apply h-7 w-7  cursor-pointer rounded-lg  text-blue-500 hover:bg-gray-100;
-  }
-  .mess-slide {
-    @apply flex h-[55px] cursor-pointer items-center space-x-2 rounded-lg p-[5px] transition-all duration-500 ease-out hover:p-[15px] hover:shadow-xl;
-  }
-  .icon-slide {
-    @apply h-7 w-7 cursor-pointer text-blue-500;
-  }
-  .icon-friends {
-    @apply flex items-center space-x-3 rounded-xl p-2  hover:bg-gray-100;
-  }
-  .logo-friends {
-    @apply h-8 w-8 rounded-full bg-gray-200 p-1 text-black;
-  }
-  .it-c {
-    @apply items-center;
-  }
-  .js {
-    @apply justify-start;
-  }
-  .tb-5 {
-    @apply text-blue-500;
-  }
-  .icon-po {
-    @apply flex h-10  space-x-2 rounded-md pl-2;
-  }
-  .icon-group {
-    @apply flex h-14 w-fit items-center  space-x-10  rounded-lg px-2 text-gray-800 hover:bg-gray-200 hover:text-blue-500;
+  .searchHelperBtn {
+    @apply flex w-14 items-center justify-center rounded-full border-[0.7px] bg-gray-100  p-[2px] text-gray-700 transition-all duration-200 ease-out hover:bg-gray-100 hover:text-blue-500 hover:shadow-2xl hover:backdrop-brightness-125;
   }
 }

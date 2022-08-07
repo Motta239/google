@@ -3,6 +3,7 @@ import GoogleProvider from 'next-auth/providers/google'
 import FaceBookProvider from 'next-auth/providers/facebook'
 import GitHubProvider from 'next-auth/providers/github'
 import TwitterProvider from 'next-auth/providers/twitter'
+
 export default NextAuth({
   providers: [
     GoogleProvider({
@@ -32,6 +33,7 @@ export default NextAuth({
         .join('')
         .toLocaleLowerCase()
       session.user.uid = token.sub
+
       return session
     },
   },

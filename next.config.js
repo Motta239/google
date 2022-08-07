@@ -2,6 +2,6 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ['links.papareact.com'],
+    domains: ['www.tremplin-numerique.org'],
   },
 }
