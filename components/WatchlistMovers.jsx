@@ -1,15 +1,11 @@
-import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/solid'
-import { CheckCircle } from '@mui/icons-material'
-import { useEffect, useLayoutEffect, useState } from 'react'
-import { collection, onSnapshot, query } from 'firebase/firestore'
+import { ArrowDownIcon, ArrowUpIcon, CheckIcon } from '@heroicons/react/solid'
+import { useEffect, useState } from 'react'
+import { PlusCircleIcon } from '@heroicons/react/outline'
+import { collection, onSnapshot } from 'firebase/firestore'
 import { db } from '../firebase'
-import { setUserData, useFetch } from './useFetch'
-function WatchlistMoversRow({ ticker, desc }) {
+import { setUserData } from './useFetch'
+function WatchlistMoversRow({ ticker, desc, price, percent, change }) {
   const [watchlist, setWatchlist] = useState([])
-  const { data } = useFetch(
-    `https://financialmodelingprep.com/api/v3/quote/${ticker.toLocaleUpperCase()}?apikey=28d6ee65329243c33f2324e5651df196`,
-    ticker
-  )
 
   useEffect(
     () =>
@@ -25,11 +21,9 @@ function WatchlistMoversRow({ ticker, desc }) {
 
   const followTicker = async (e) => {
     e.stopPropagation()
-    setUserData(db, ticker, following, data[0]?.companyName)
+    setUserData(db, ticker, following, ticker)
   }
-  useEffect(() => {
-    console.log(ticker)
-  }, [db])
+
   return (
     <div className="flex h-[55px] items-center space-x-3 border-t  ">
       <div className="flex w-full flex-col space-y-1 p-2 lg:flex-row lg:items-center lg:space-y-0 lg:space-x-2">
@@ -41,54 +35,54 @@ function WatchlistMoversRow({ ticker, desc }) {
         <p className="w-full text-xs">{desc}</p>
       </div>
 
-      {data && (
-        <div className="flex w-[130%]  items-center justify-between space-x-3">
-          <p className="h-6  w-[70px]">
-            ${data[0]?.price?.toString().slice(0, 6)}
-          </p>
+      <div className="flex w-[130%]  items-center justify-between space-x-3">
+        <p className="h-6  w-[70px]">${price?.toString().slice(0, 6)}</p>
 
-          <div className="flex  justify-start">
-            <p
-              className={`h-6 md:inline-flex ${
-                data[0]?.change >= 0 ? 'text-green-700' : 'text-red-700'
-              } `}
-            >
-              {data[0]?.change > 0 ? '+' : '-'}$
-              {data[0]?.change?.toString().replace('-', '').slice(0, 4)}
-            </p>
-          </div>
-          <div className="flex space-x-3">
-            <div
-              className={` ${
-                data[0]?.change >= 0 ? 'bg-green-100' : 'bg-red-100'
-              } flex h-fit w-[74px] items-center justify-center  rounded-lg `}
-            >
-              <div className="flex  items-center font-[400] ">
-                {data[0]?.change <= 0 ? (
-                  <ArrowDownIcon className="h-4 w-4 text-red-700" />
-                ) : (
-                  <ArrowUpIcon className="h-4 w-4 text-green-700" />
-                )}
-                <p
-                  className={` p-1 text-[15px] ${
-                    data[0]?.change >= 0 ? 'text-green-700' : 'text-red-700'
-                  } `}
-                >
-                  {data[0]?.changesPercentage
-                    ?.toString()
-                    .replace('-', '')
-                    .slice(0, 4)}
-                  %
-                </p>
-              </div>
-            </div>
-            <CheckCircle
-              onClick={followTicker}
-              className=" text-gray-500 hover:text-blue-600"
-            />
-          </div>
+        <div className="flex  justify-start">
+          <p
+            className={`h-6 md:inline-flex ${
+              change >= 0 ? 'text-green-700' : 'text-red-700'
+            } `}
+          >
+            {change > 0 ? '+' : '-'}$
+            {change?.toString().replace('-', '').slice(0, 4)}
+          </p>
         </div>
-      )}
+        <div className="flex space-x-3">
+          <div
+            className={` ${
+              change >= 0 ? 'bg-green-100' : 'bg-red-100'
+            } flex h-fit w-[74px] items-center justify-center  rounded-lg `}
+          >
+            <div className="flex  items-center font-[400] ">
+              {change <= 0 ? (
+                <ArrowDownIcon className="h-4 w-4 text-red-700" />
+              ) : (
+                <ArrowUpIcon className="h-4 w-4 text-green-700" />
+              )}
+              <p
+                className={` p-1 text-[15px] ${
+                  change >= 0 ? 'text-green-700' : 'text-red-700'
+                } `}
+              >
+                {percent?.toString().replace('-', '').slice(0, 4)}%
+              </p>
+            </div>
+          </div>
+
+          {following === -1 ? (
+            <PlusCircleIcon
+              onClick={followTicker}
+              className="h-6 w-6 text-[#3c4043] hover:text-blue-500"
+            />
+          ) : (
+            <CheckIcon
+              onClick={followTicker}
+              className="h-6 w-6  text-blue-500"
+            />
+          )}
+        </div>
+      </div>
     </div>
   )
 }

@@ -13,23 +13,13 @@ function SearchResults({ ticker, price, tickerName, change }) {
           className={`hidden w-1/5 md:inline-flex ${
             change > 0 ? 'text-green-700' : 'text-red-700'
           }`}
-        >
-          ${price.toFixed(2)}
-        </p>
+        ></p>
         <div
           className={` ${
             percent >= 0 ? 'bg-green-100' : 'bg-red-100'
           } flex h-fit w-[74px] items-center justify-center  space-x-1  rounded-lg `}
         >
-          <div className="flex  ">
-            <p
-              className={` p-1 text-[13px] font-semibold ${
-                percent >= 0 ? 'text-green-700' : 'text-red-700'
-              } `}
-            >
-              {Math.abs(percent?.toFixed(2))}%
-            </p>
-          </div>
+          <div className="flex  "></div>
         </div>
       </div>
     </div>

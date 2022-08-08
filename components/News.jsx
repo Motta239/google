@@ -2,9 +2,14 @@ import React, { useEffect, useState } from 'react'
 import NewCard from './NewCard'
 import { useFetch } from './useFetch'
 import { SpinnerCircular } from 'spinners-react'
+import { getUserData } from './useFetch'
+import { db } from '../firebase'
+
 function News() {
+  const { data: userData } = getUserData(db) //user watchlist
+  const list = userData?.map((t) => t.ticker).join() //user watchlist news
   const { data } = useFetch(
-    `https://newsapi.org/v2/everything?q=stock&from=2022-07-07&sortBy=publishedAt&apiKey=1535b6e27e7941ff9ac8336e72365ae3`
+    `https://financialmodelingprep.com/api/v3/stock_news?tickers=${list}&page=0&apikey=28d6ee65329243c33f2324e5651df196`
   )
   const [news, setNews] = useState(data)
   const [tab, setTab] = useState(0)
@@ -15,7 +20,7 @@ function News() {
     setTab(num)
     setNews(data?.slice(0, num2).sort((a, b) => 0.5 - Math.random()))
   }
-  console.log(news)
+
   return (
     <div className="flex flex-col space-y-3">
       <div className=" flex flex-col space-y-3">
@@ -47,11 +52,12 @@ function News() {
         {news ? (
           news.map((news) => (
             <NewCard
-              source={news.source.name}
-              imgUrl={news.urlToImage}
-              date={news.publishedAt}
+              source={news.site}
+              imgUrl={news.image}
+              date={news.publishedDate}
               head={news.title}
               link={news.url}
+              symbol={news.symbol}
             />
           ))
         ) : (

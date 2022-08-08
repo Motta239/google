@@ -2,10 +2,10 @@ import { useRouter } from 'next/router'
 import WatchlistMovers from '../../components/WatchlistMOvers'
 import { SpinnerCircular } from 'spinners-react'
 import { useFetch } from '../../components/useFetch'
-function Gainers() {
+function MostActive() {
   const router = useRouter()
   const { data: tickers } = useFetch(
-    'https://financialmodelingprep.com/api/v3/stock_market/gainers?apikey=28d6ee65329243c33f2324e5651df196'
+    'https://financialmodelingprep.com/api/v3/stock_market/actives?apikey=28d6ee65329243c33f2324e5651df196'
   )
   console.log(tickers)
   const goToPage = (url) => {
@@ -19,7 +19,7 @@ function Gainers() {
         {tickers ? (
           <div className="flex w-[550px] flex-col xl:ml-0  ">
             <p className="  mb-3 text-lg  font-light text-gray-900 ">
-              Top Gainers Today
+              Most Active Today
             </p>
             {tickers?.map((ticker) => (
               <div
@@ -49,4 +49,4 @@ function Gainers() {
   )
 }
 
-export default Gainers
+export default MostActive

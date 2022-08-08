@@ -4,19 +4,9 @@ import { useRouter } from 'next/router'
 import { Close } from '@mui/icons-material'
 import { SearchIcon } from '@heroicons/react/solid'
 import { useFetch } from './useFetch'
+import axios from 'axios'
+import { SpinnerCircular } from 'spinners-react'
 function Search() {
-  const { data: list } = useFetch(
-    'https://financialmodelingprep.com/api/v3/stock-screener?marketCapLowerThan=10000000000000&limit=100&betaMoreThan=1&volumeMoreThan=100000&exchange=NYSE,NASDAQ&apikey=28d6ee65329243c33f2324e5651df196 '
-  )
-  const [searchResults, setSearchResults] = useState(filterdList)
-  const [search, setSearch] = useState('')
-  const [searchBarWit, setSearchBarWit] = useState(true)
-  const [modalView, setModalView] = useState('')
-  const [openSearchField, setOpenSearchField] = useState(false)
-  const [top, setTop] = useState('h-[-10vh]')
-  const [tab, setTab] = useState(false)
-  const openSearch = useRef()
-  const searchInput = useRef()
   const router = useRouter()
   const uid = router?.query?.uid?.toLocaleUpperCase()
   const goToPage = (url) => {
@@ -25,6 +15,29 @@ function Search() {
       pathname: `/finance/${url}`,
     })
   }
+  const [loading, setLoading] = useState(false)
+  const [data, setData] = useState([])
+  const getData = async (url) => {
+    setLoading(true)
+    const { data } = await axios.get(url)
+    setData(data)
+    setLoading(false)
+  }
+  console.log(loading)
+  useEffect(() => {
+    getData(
+      `https://financialmodelingprep.com/api/v3/stock-screener?marketCapLowerThan=10000000000000&limit=100&betaMoreThan=1&volumeMoreThan=100000&exchange=NYSE,NASDAQ&apikey=28d6ee65329243c33f2324e5651df196`
+    )
+  }, [])
+
+  const [search, setSearch] = useState('')
+  const [searchBarWit, setSearchBarWit] = useState(true)
+  const [modalView, setModalView] = useState('')
+  const [openSearchField, setOpenSearchField] = useState(false)
+  const [top, setTop] = useState('h-[-10vh]')
+  const [tab, setTab] = useState(false)
+  const openSearch = useRef()
+  const searchInput = useRef()
 
   useEffect(() => {
     document.addEventListener('mousedown', clickOutside)
@@ -52,7 +65,7 @@ function Search() {
     if ((event.metaKey || event.ctrlKey) && event.code === 'KeyJ') {
       setOpenSearchField(true)
       setModalView(
-        `fixed inset-0 z-50 flex ${top} justify-center md:z-0 bg-white md:bg-transparent md:sticky md:top-[45px]`
+        `fixed inset-0 z-50 flex top-20 justify-center md:z-0 bg-white md:bg-transparent md:sticky md:top-[45px]`
       )
       setSearchBarWit(false)
       searchInput.current.focus()
@@ -60,12 +73,12 @@ function Search() {
   }
   const clickOutside = (e) => {
     if (!openSearch.current?.contains(e.target)) {
-      setSearch(false)
+      setSearch(search)
       setOpenSearchField(false)
       setModalView('')
       setTop('h-[-10vh]')
       setTab(false)
-      setSearchResults(filterdList)
+
       setSearchBarWit(true)
     }
   }
@@ -83,27 +96,18 @@ function Search() {
   const keyDown = (e) => {
     if (e.key == 'Escape') {
       searchInput.current.blur()
-      setSearch(false)
+      setSearch(search)
       setOpenSearchField(false)
       setTop('h-[-10vh]')
       setTab(false)
     }
   }
 
-  const filterByExchange = (exchange) => {
-    const exchangeList = filterdList.filter((ticker) =>
-      ticker.exchangeShortName.includes(exchange)
-    )
-    setSearchResults(exchangeList)
-  }
-  const filterdList = list?.filter(
+  const filterdList = data?.filter(
     (ticker) =>
-      ticker.companyName.toLowerCase().includes(search) ||
-      ticker.symbol.toLowerCase().includes(search)
+      ticker?.companyName?.toLowerCase().includes(search) ||
+      ticker?.symbol?.toLowerCase().includes(search)
   )
-
-  console.log(filterdList)
-
   return (
     <>
       <div className={modalView}>
@@ -131,7 +135,7 @@ function Search() {
                   type="text"
                   className={` flex ${
                     uid && !openSearchField && 'hidden'
-                  } flex-shrink items-center border-transparent bg-transparent  text-xs placeholder-gray-700 outline-none   focus:border-transparent focus:ring-0  lg:inline-flex `}
+                  } w-[300px] flex-shrink items-center border-transparent bg-transparent  text-xs placeholder-gray-700 outline-none   focus:border-transparent focus:ring-0  lg:inline-flex `}
                   placeholder={
                     uid
                       ? `${uid}`
@@ -143,7 +147,8 @@ function Search() {
                   <div
                     onClick={() => {
                       searchInput.current.value = ''
-                      setSearch(false)
+                      setSearch('')
+                      setData(data)
                       setTab(0)
                     }}
                     className=" absolute right-3 flex h-7 w-7 cursor-pointer items-center justify-center rounded-full bg-gray-100 text-gray-600 hover:bg-gray-300 "
@@ -156,13 +161,15 @@ function Search() {
             {openSearchField && (
               <div
                 className={`absolute  flex  h-[${
-                  searchResults?.length * 48
+                  filterdList?.length * 48
                 }px] scrollbar-thin  max-h-[300px]  w-[100%]  flex-col overflow-y-scroll   rounded-md  bg-white    shadow-xl md:w-[550px]`}
               >
-                <div className="sticky top-0 mt-4 mb-4 flex h-16  justify-between bg-white px-3  ">
+                <div className="sticky top-0 flex h-16 justify-between  bg-white p-3 px-3  ">
                   <div
                     onClick={() => {
-                      filterByExchange('')
+                      getData(
+                        'https://financialmodelingprep.com/api/v3/stock-screener?marketCapLowerThan=10000000000000&limit=100&betaMoreThan=1&volumeMoreThan=100000&exchange=NYSE,NASDAQ&apikey=28d6ee65329243c33f2324e5651df196'
+                      )
                       setTab(0)
                     }}
                     className={`${tab == 0 && 'active'} filterBtn `}
@@ -171,61 +178,83 @@ function Search() {
                   </div>
                   <div
                     onClick={() => {
-                      filterByExchange('NYSE')
+                      getData(
+                        'https://financialmodelingprep.com/api/v3/stock-screener?marketCapLowerThan=10000000000000&limit=100&betaMoreThan=1&volumeMoreThan=100000&exchange=NYSE,NASDAQ&apikey=28d6ee65329243c33f2324e5651df196'
+                      )
                       setTab(1)
                     }}
                     className={`${tab == 1 && 'active'} filterBtn `}
                   >
-                    <p className="">NYSE</p>
+                    <p className="">Stock/ETF</p>
                   </div>
                   <div
                     onClick={() => {
-                      filterByExchange('NASDAQ')
+                      getData(
+                        'https://financialmodelingprep.com/api/v3/quotes/index?apikey=28d6ee65329243c33f2324e5651df196'
+                      )
                       setTab(2)
                     }}
                     className={`${tab == 2 && 'active'} filterBtn `}
                   >
-                    <p className="">NASDAQ</p>
+                    <p className="">Index</p>
                   </div>
                   <div
                     onClick={() => {
                       setTab(3)
-                      filterByExchange('Index')
+                      getData(
+                        'https://financialmodelingprep.com/api/v3/quotes/crypto?apikey=28d6ee65329243c33f2324e5651df196'
+                      )
                     }}
                     className={`${tab == 3 && 'active'} filterBtn `}
                   >
-                    <p className="">Index</p>
+                    <p className="">Crypto</p>
                   </div>
                   <div
-                    onClick={() => setTab(4)}
+                    onClick={() => {
+                      getData(
+                        'https://financialmodelingprep.com/api/v3/quotes/forex?apikey=28d6ee65329243c33f2324e5651df196'
+                      )
+                      setTab(4)
+                    }}
                     className={`${tab == 4 && 'active'} filterBtn `}
                   >
                     <p className="">Currency</p>
                   </div>
                   <div
-                    onClick={() => setTab(5)}
+                    onClick={() => {
+                      getData(
+                        'https://financialmodelingprep.com/api/v3/symbol/available-commodities?apikey=28d6ee65329243c33f2324e5651df196'
+                      )
+                      setTab(5)
+                    }}
                     className={`${tab == 5 && 'active'} filterBtn `}
                   >
                     <p className="">Futures</p>
                   </div>
                 </div>
-                {searchResults?.map((result) => (
-                  <div
-                    onClick={() => {
-                      goToPage(result.symbol)
-                    }}
-                    key={result.symbol}
-                    className=""
-                  >
-                    <SearchResults
-                      ticker={result.symbol}
-                      tickerName={result.companyName}
-                      exc={result.exchangeShortName}
-                      price={result.price}
-                      change={result.change}
-                    />
+                {loading ? (
+                  <div className="flex h-32 items-center justify-center">
+                    <SpinnerCircular color="#3b82f6" />
                   </div>
-                ))}
+                ) : (
+                  filterdList?.map((result) => (
+                    <div
+                      onClick={() => {
+                        goToPage(result.symbol)
+                      }}
+                      key={result.symbol}
+                      className=""
+                    >
+                      <SearchResults
+                        ticker={result.symbol}
+                        tickerName={result.companyName || result.name}
+                        exc={result.exchangeShortName}
+                        price={result.price}
+                        change={result.change}
+                      />
+                    </div>
+                  ))
+                )}
               </div>
             )}
           </div>

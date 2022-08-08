@@ -1,6 +1,6 @@
 import React from 'react'
-
-function NewCard({ source, imgUrl, date, head, link }) {
+import Moment from 'react-moment'
+function NewCard({ source, imgUrl, date, head, link, symbol }) {
   return (
     <div
       onClick={() => window.open(link, '_blank', 'noopener,noreferrer')}
@@ -9,7 +9,10 @@ function NewCard({ source, imgUrl, date, head, link }) {
       <div className="flex w-[70%] flex-col space-y-2">
         <div className="flex items-center space-x-2 ">
           <p className="text-xs text-gray-700 ">{source} </p>
-          <p className="text-xs text-gray-700 ">{date}</p>
+          <Moment className=" text-xs text-gray-600" fromNow>
+            {new Date(date).toLocaleString()}
+          </Moment>
+          <div className="filterBtn h-6 w-14 border">{symbol}</div>
         </div>
         <p className=" pr-3  tracking-[-0.05em]">{head}</p>
       </div>

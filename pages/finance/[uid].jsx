@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useRef } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import About from '../../components/About'
 import { useFetch, getUserData, setUserData } from '../../components/useFetch'
 import {
@@ -13,43 +13,72 @@ import { ChevronLeftIcon } from '@heroicons/react/solid'
 import { db } from '../../firebase'
 import NewCard from '../../components/NewCard'
 import { SpinnerCircular } from 'spinners-react'
-
+import axios from 'axios'
 function Finance() {
   const router = useRouter()
   const { data: userData } = getUserData(db)
   const uid = router.query.uid?.toLocaleUpperCase()
   const windowRef = useRef()
-  const { data: stockData } = useFetch(
-    `https://financialmodelingprep.com/api/v3/profile/${uid}?apikey=174e82b29da8eaa0651456c2933d7913`
-  )
-  const { data: newsData } = useFetch(
-    `https://newsapi.org/v2/everything?q=${uid}&from=2022-07-07&sortBy=publishedAt&apiKey=1535b6e27e7941ff9ac8336e72365ae3`
-  )
 
+  const [loading, setLoading] = useState(false)
+  const [data, setData] = useState([])
+  const [profileData, setProfileData] = useState([])
+  const [newsData, setNewsData] = useState([])
+
+  const getStockData = async (url) => {
+    setLoading(true)
+    const { data } = await axios.get(url)
+    setData(data[0])
+    setLoading(false)
+  }
+  const getStockProfileData = async (url) => {
+    setLoading(true)
+    const { data } = await axios.get(url)
+    setProfileData(data[0])
+    setLoading(false)
+  }
+  const getNewsData = async (url) => {
+    setLoading(true)
+    const { data } = await axios.get(url)
+    setNewsData(data.slice(0, 7))
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    getStockData(
+      `https://financialmodelingprep.com/api/v3/quote/${uid}?apikey=28d6ee65329243c33f2324e5651df196`
+    )
+    getStockProfileData(
+      `https://financialmodelingprep.com/api/v3/profile/${uid}?apikey=28d6ee65329243c33f2324e5651df196`
+    )
+    getNewsData(
+      `https://financialmodelingprep.com/api/v3/stock_news?tickers=${uid}&limit=50&apikey=28d6ee65329243c33f2324e5651df196`
+    )
+  }, [uid])
+
+  const followTicker = async (e) => {
+    e.stopPropagation()
+    setUserData(db, data.symbol, following, data.symbol)
+  }
   const following = userData?.findIndex(
     (element) => element.ticker.toLocaleUpperCase() === uid
   )
-  const followTicker = async (e) => {
-    e.stopPropagation()
-    setUserData(db, stockData[0]?.symbol, following, stockData[0]?.companyName)
-  }
-  const filterdNews = newsData?.filter((n) => n.title.includes(uid))
-  console.log(filterdNews)
+  console.log(data, profileData)
   return (
     <div ref={windowRef}>
-      {stockData ? (
+      {data == undefined && profileData == undefined ? (
+        <div className=" flex h-[100vh] items-center justify-center">
+          <SpinnerCircular />
+        </div>
+      ) : (
         <div className="  flex flex-col space-y-5 lg:items-center">
           <div className="flex-flex-col  justify-around  ">
             <Head>
-              <title>{`${stockData[0]?.symbol} $${stockData[0]?.price} (${
-                stockData[0]?.changes < 0 ? '🔻' : '🟢'
-              }${Math.abs(
-                (
-                  ((stockData[0]?.changes - stockData[0]?.price) /
-                    stockData[0]?.price) *
-                  100
-                )?.toFixed(2)
-              )}%) ${stockData[0]?.companyName} `}</title>
+              <title>{`${data.symbol} $${data.price} (${
+                data.change < 0 ? '▼' : '▲ '
+              }${Math.abs(data.changesPercentage?.toFixed(2))}%) ${
+                data.name
+              } `}</title>
               <link rel="icon" href="/icons8-google.svg" />
             </Head>
 
@@ -62,23 +91,19 @@ function Finance() {
                     </a>
                     <div className="flex  space-x-1 text-[12px]  ">
                       <ChevronLeftIcon className="h-4 w-4 rotate-180  " />
-                      <p className="text-gray-900">{` ${stockData[0]?.symbol}`}</p>
-                      <p className="text-gray-900">{`• ${stockData[0]?.exchangeShortName}`}</p>
+                      <p className="text-gray-900">{` ${data.symbol}`}</p>
+                      <p className="text-gray-900">{`• ${data.exchange}`}</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-2">
-                    {stockData[0]?.image ? (
+                    {profileData?.image && (
                       <img
                         className="h-7 w-7 rounded-full object-fill shadow-lg"
-                        src={stockData[0]?.image}
+                        src={profileData.image}
                         alt=""
                       />
-                    ) : (
-                      <SpinnerCircular />
                     )}
-                    <p className="text-[22px] text-gray-700 ">
-                      {stockData[0]?.companyName}
-                    </p>
+                    <p className="text-[22px] text-gray-700 ">{data.name}</p>
                   </div>
                 </div>
                 <div className="flex space-x-3 text-blue-600">
@@ -111,21 +136,19 @@ function Finance() {
 
               <p className="mt-2 border-b  "></p>
               <div className="mt-5 flex w-[93%] flex-col justify-between lg:w-[1024px] lg:flex-row ">
-                <div className=" flex max-w-[675px]  flex-col lg:w-[675px]">
+                <div className=" flex w-[90vw]   flex-col lg:w-[675px]">
                   <div className="flex h-11  items-center space-x-2 ">
                     <p className="text-[1.75rem] text-gray-700 ">
-                      ${stockData[0]?.price}
+                      ${data.price}
                     </p>
                     <div
                       className={` ${
-                        stockData[0]?.changes >= 0
-                          ? 'bg-green-100'
-                          : 'bg-red-100'
+                        data.change >= 0 ? 'bg-green-100' : 'bg-red-100'
                       } flex h-fit w-[74px] items-center justify-center  rounded-lg `}
                     >
                       <ArrowDownIcon
                         className={`h-7   ${
-                          stockData[0]?.changes >= 0
+                          data.change >= 0
                             ? 'rotate-180 text-green-600 '
                             : 'text-red-700'
                         }  items-center rounded-lg  py-2 `}
@@ -133,48 +156,34 @@ function Finance() {
                       <div className="flex w-[47px] ">
                         <p
                           className={` p-1 text-[13px] font-semibold ${
-                            stockData[0]?.changes >= 0
-                              ? 'text-green-700'
-                              : 'text-red-700'
+                            data.change >= 0 ? 'text-green-700' : 'text-red-700'
                           } `}
                         >
-                          {Math.abs(
-                            (
-                              (stockData[0]?.changes / stockData[0]?.price) *
-                              100
-                            )?.toFixed(2)
-                          )}
-                          %
+                          {Math.abs(data.changesPercentage?.toFixed(2))}%
                         </p>
                       </div>
                     </div>
                     <p
                       className={`  ${
-                        stockData[0]?.changes > 0
-                          ? 'text-green-600'
-                          : 'text-red-600'
+                        data.change > 0 ? 'text-green-600' : 'text-red-600'
                       }`}
                     >
-                      {`${
-                        stockData[0]?.changes > 0 ? '+' : ''
-                      }${stockData[0]?.changes.toFixed(2)}`}{' '}
-                      Today
+                      {`${data.change > 0 ? '+' : ''}${data.change}`} Today
                     </p>
                   </div>
 
                   <p className="text-lg">In The News</p>
                   {newsData ? (
-                    filterdNews
-                      ?.slice(0, 7)
-                      .map((news) => (
-                        <NewCard
-                          source={news.source.name}
-                          imgUrl={news.urlToImage}
-                          date={news.publishedAt}
-                          head={news.title}
-                          link={news.url}
-                        />
-                      ))
+                    newsData.map((news) => (
+                      <NewCard
+                        source={news.site}
+                        imgUrl={news.image}
+                        date={news.publishedDate}
+                        head={news.title}
+                        link={news.url}
+                        symbol={news.symbol}
+                      />
+                    ))
                   ) : (
                     <div className="flex h-56 flex-col items-center justify-center space-y-3">
                       <SpinnerCircular />
@@ -183,22 +192,20 @@ function Finance() {
                   )}
                 </div>
                 <div className="flex w-[93vw] flex-col space-y-4  lg:w-[350px]">
-                  <About
-                    name={stockData[0]?.companyName}
-                    desc={stockData[0]?.description}
-                    employees={stockData[0]?.fullTimeEmployees}
-                    ceo={stockData[0]?.ceo}
-                    website={stockData[0]?.website}
-                    img={stockData[0]?.image}
-                  />
+                  {profileData && (
+                    <About
+                      name={profileData.companyName}
+                      desc={profileData.description}
+                      employees={profileData.fullTimeEmployees}
+                      ceo={profileData.ceo}
+                      website={profileData.website}
+                      img={profileData.image}
+                    />
+                  )}
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      ) : (
-        <div className=" flex h-[100vh] items-center justify-center">
-          <SpinnerCircular />
         </div>
       )}
     </div>
