@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import WatchlistMovers from '../../components/WatchlistMOvers'
+import WatchlistMovers from '../../components/WatchlistMovers'
 import { SpinnerCircular } from 'spinners-react'
 import { useFetch } from '../../components/useFetch'
 function Gainers() {
