@@ -25,7 +25,7 @@ function Overview() {
     setUrl(url)
     setTab(num)
   }
-  console.log(update)
+
   return (
     <div
       className={` ${

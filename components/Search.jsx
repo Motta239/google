@@ -23,7 +23,7 @@ function Search() {
     setData(data)
     setLoading(false)
   }
-  console.log(loading)
+
   useEffect(() => {
     getData(
       `https://financialmodelingprep.com/api/v3/stock-screener?marketCapLowerThan=10000000000000&limit=100&betaMoreThan=1&volumeMoreThan=100000&exchange=NYSE,NASDAQ&apikey=28d6ee65329243c33f2324e5651df196`

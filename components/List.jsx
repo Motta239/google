@@ -11,7 +11,6 @@ function List() {
   const { data } = useFetch(
     `https://financialmodelingprep.com/api/v3/quote/${list}?apikey=28d6ee65329243c33f2324e5651df196`
   )
-  console.log(data)
 
   return (
     <div className="flex  flex-col xl:ml-0  ">

@@ -29,11 +29,7 @@ function Helper() {
   }
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      console.log('object')
-    })
-
-    console.log('moti')
+    navigator.geolocation.getCurrentPosition((position) => {})
   }, [])
   useEffect(() => {
     window.addEventListener('mousemove', onMouseMove)
@@ -175,9 +171,7 @@ function Helper() {
             <img
               onClick={() => {
                 const location = navigator.geolocation.getCurrentPosition(
-                  function (position) {
-                    console.log(position)
-                  }
+                  function (position) {}
                 )
                 setOption(
                   <div>

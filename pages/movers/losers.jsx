@@ -7,7 +7,7 @@ function Losers() {
   const { data: tickers } = useFetch(
     'https://financialmodelingprep.com/api/v3/stock_market/losers?apikey=28d6ee65329243c33f2324e5651df196'
   )
-  console.log(tickers)
+
   const goToPage = (url) => {
     router.push({
       pathname: `/finance/${url}`,

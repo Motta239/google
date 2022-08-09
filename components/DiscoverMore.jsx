@@ -852,14 +852,7 @@ function DiscoverMore() {
     '#99E6E6',
     '#6666FF',
   ]
-  // const stocks2 = stocks[0].map((stock) => ({
-  //   ...stock,
-  //   change:
-  //     Math.random() > 0.5
-  //       ? +(Math.random() * 15).toString().slice(0, 4)
-  //       : -(Math.random() * 15).toString().slice(0, 4),
-  // }))
-  // console.log(stocks2)
+
   return (
     <div className="relative flex w-full flex-col space-y-4 lg:max-w-[1024px]  ">
       <div className="text-xl  text-[#243342]">

@@ -145,7 +145,7 @@ export default YourProfolio
 function ProtfolioRow({ name, username, id }) {
   const { data: session } = useSession()
   const router = useRouter()
-  console.log(id)
+
   return (
     <>
       {username == session?.username && (
