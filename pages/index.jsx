@@ -25,7 +25,7 @@ function Home() {
               <div className="flex   flex-col space-y-4">
                 <List />
                 <Protfolios />
-                <News />
+        
               </div>
               <div className="flex-col md:inline-flex md:max-w-[326px] md:space-y-8">
                 <YourProfolio />
